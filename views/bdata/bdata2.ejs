@@ -1,0 +1,15 @@
+<form action="/book/submit" method="POST" class="bookactionformdiv">
+    <% if(book.available !== book.count) { %>
+    <input name="name" class="baform-n disabled" type="text" placeholder="Name" autocomplete="off">
+    <input name="class" class="baform disabled" type="text" placeholder="Klasse" autocomplete="off">
+    <input name="date" class="baform disabled" type="text" placeholder="Datum"
+        value="<%= date %>" autocomplete="off">
+    <input class="baform-s disabled" type="submit" value="Verleihen">
+    <% } else { %>
+    <input name="name" class="baform-n" type="text" placeholder="Name" autocomplete="off">
+    <input name="class" class="baform" type="text" placeholder="Klasse" autocomplete="off">
+    <input name="date" class="baform" type="text" placeholder="Datum" value="<%= date %>" autocomplete="off">
+    <input class="baform-s" type="submit" value="Verleihen">
+    <% } %>
+    <input class="bookidinvis" name="bookid" type="text" value="<%= book.id %>">
+</form>

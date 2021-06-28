@@ -1,0 +1,43 @@
+
+<%- include("./partials/headerindex.ejs") %>
+
+<div class="rectapw">
+  <!-- login form -->
+  <div>
+    <form action="/auth/login" method="POST">
+      <div class="rect shadow-dreamy" id="rect">
+        <div style="width: 100px;height: 100px; display: inline-block; border-radius: 100%;">
+          <svg style="color: white;" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        </div>
+        <h1>Willkommen</h1>
+        <div class="form-section">
+          <input type="text" id="username" name="username" placeholder="" required/>
+          <label for="username" class="form-label"><span class="label-content">i-Serv Nutzername</span></label>
+        </div>
+        <div class="form-section" style="margin-top: 30px;">
+          <input type="password" id="password" name="password" placeholder="" required/>
+          <label for="password" class="form-label"><span class="label-content">Passwort</span></label>
+        </div>
+        <% if(error == 'noauth') {%>
+          <span style="color: #53b581; font-family: manropethin; top: -20px; position: relative;">Dafür musst Du Dich zuerst anmelden.</span>
+          <input type="submit" id="login-btn" value="Anmelden" type="submit" style="margin-top: 0;">
+        <% } else if (error == 'user' || error == 'pw') { %>
+          <span style="color: red; font-family: manropethin; top: -20px; position: relative;">Benutzername oder Passwort falsch</span>
+          <input type="submit" id="login-btn" value="Anmelden" type="submit" style="margin-top: 0;">
+        <% } else if(error == 'access denied') { %>
+          <span style="color: red; font-family: manropethin; top: -20px; position: relative;">Zugriff verweigert: Dieser Benutzer ist aktuell kein Manager.</span>
+          <input type="submit" id="login-btn" value="Anmelden" type="submit" style="margin-top: 0;">
+        <% } else { %> 
+          <input type="submit" id="login-btn" value="Anmelden" type="submit">
+        <% } %>
+      </div>
+    </form>
+    <!-- forgot password button section -->
+    <div class="forgotpw" id="forgotpw">
+      <a href="/reset_password" style="padding-right: 10px;">Passwort vergessen ?</a>
+      <span style="cursor:default;"> | </span>
+      <a href="/register" style="padding-left: 10px;">Registrieren</a>
+    </div>
+  </div>
+</div>
+  

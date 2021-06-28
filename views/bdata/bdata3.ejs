@@ -1,0 +1,16 @@
+<tr class="bookstufftr">
+    <td class="bookstuffusers -l">Name</td>
+    <td class="bookstuffusers -c">Klasse</td>
+    <td class="bookstuffusers -r">Zeitraum</td>
+</tr>
+<% for(let i=0; i < bhistory.length; i++){ %>
+<tr class="bookstufftr">
+    <td class="bookstuffusersdata"><%= bhistory[i].name %></td>
+    <td class="bookstuffusersdata-c"><%= bhistory[i].class %></td>
+    <td <% if(bhistory[i].active == true) { %> class="bookstuffusersdata-date" <% } else { %>
+        class="bookstuffusersdata-date-inactive" <% } %>><%= bhistory[i].date %>
+        <% if (bhistory[i].active == true) {%><a title="Austragen" class="bookejs-a"
+            href="/book/drop/id=<%= bhistory[i].id %>&bid=<%= bhistory[i].bookid %>"><i
+                class="fas fa-times-circle bookejs-i"></i></a><% }  %> </td>
+</tr>
+<% } %>

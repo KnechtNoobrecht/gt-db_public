@@ -1,0 +1,145 @@
+@font-face {
+  font-family: "manropesemibold";
+  src: url("../resources/fonts/manrope/semibold.woff") format("woff");
+}
+
+@font-face {
+  font-family: "manropebold";
+  src: url("../resources/fonts/manrope/bold.woff") format("woff");
+}
+
+@font-face {
+  font-family: "manrope";
+  src: url("../resources/fonts/manrope/regular.woff") format("woff");
+}
+
+@font-face {
+  font-family: "manropemedium";
+  src: url("../resources/fonts/manrope/medium.woff") format("woff");
+}
+
+@font-face {
+  font-family: "manropelight";
+  src: url("../resources/fonts/manrope/light.woff") format("woff");
+}
+
+@font-face {
+  font-family: "manropethin";
+  src: url("../resources/fonts/manrope/thin.woff") format("woff");
+}
+
+@font-face {
+  font-family: "coco";
+  src: url("../resources/fonts/cocogothic/regular.woff") format("woff");
+}
+
+@font-face {
+  font-family: "cocobold";
+  src: url("../resources/fonts/cocogothic/bold.woff") format("woff");
+}
+
+@font-face {
+  font-family: "cocofat";
+  src: url("../resources/fonts/cocogothic/fat.woff") format("woff");
+}
+
+@font-face {
+  font-family: "cocoheavy";
+  src: url("../resources/fonts/cocogothic/heavy.woff") format("woff");
+}
+
+@font-face {
+  font-family: "cocolight";
+  src: url("../resources/fonts/cocogothic/light.woff") format("woff");
+}
+
+@font-face {
+  font-family: "cocoultralight";
+  src: url("../resources/fonts/cocogothic/ultralight.woff") format("woff");
+}
+
+@font-face {
+  font-family: "piersans";
+  src: url("../resources/fonts/piersans/regular.woff") format("woff");
+}
+
+@font-face {
+  font-family: "piersansbold";
+  src: url("../resources/fonts/piersans/bold.woff") format("woff");
+}
+
+/* Turn on custom 8px wide scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  /* 1px wider than Lion. */
+  /* This is more usable for users trying to click it. */
+  background-color: rgba(0, 0, 0, 0);
+  border-radius: 100px;
+}
+
+/* hover effect for both scrollbar area, and scrollbar 'thumb' */
+::-webkit-scrollbar:hover {
+  background-color: rgba(0, 0, 0, 0.09);
+}
+
+/* The scrollbar 'thumb' ...that marque oval shape in a scrollbar */
+::-webkit-scrollbar-thumb:vertical {
+  /* This is the EXACT color of Mac OS scrollbars. 
+     Yes, I pulled out digital color meter */
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 100px;
+  background-clip: padding-box;
+  border: 2px solid rgba(0, 0, 0, 0);
+  min-height: 10px;
+  /*Prevent it from getting too small */
+}
+
+::-webkit-scrollbar-thumb:vertical:active {
+  background: rgba(0, 0, 0, 0.61);
+  /* Some darker color when you click it */
+  border-radius: 100px;
+}
+
+.loading * {
+  -webkit-transition: none !important;
+  transition: none !important;
+}
+
+body {
+  background-color: #202225 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+#navimg {
+  width: 45px !important;
+  height: 35px !important;
+  -ms-flex-line-pack: center;
+      align-content: center;
+}
+
+#navtable {
+  width: 100% !important;
+  height: 43px;
+  background-color: #1a1b1e;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+.table2 table {
+  width: 100%;
+  height: 0rem;
+  background: -webkit-gradient(linear, left bottom, left top, from(#202225), to(#111213));
+  background: linear-gradient(0deg, #202225, #111213);
+}
+
+.disabled {
+  pointer-events: none !important;
+  opacity: 0.65;
+}
+/*# sourceMappingURL=main.css.map */

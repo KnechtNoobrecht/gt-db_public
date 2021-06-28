@@ -1,0 +1,115 @@
+
+<%- include("./partials/header.ejs") %>
+<%- include("./partials/sidebar.ejs") %>
+
+<div class="container-fluid standardcontainer" style="margin-top: 0;" id="container">
+  <!--page-specific content-->
+  <div class="library-table bulk">
+    <div class="mycontainer">
+      <div class="box-quickinput" style="margin-bottom: 40px;">
+            <form action="/searchv2" method="GET">
+              <div class="input-group">
+                <input
+                  type="search"
+                  id="searchbar"
+                  class="form-control quickinput"
+                  name="p"
+                  autocomplete="off"
+                />
+                <span class="input-group-btn">
+                  <div class="quickinput-button">
+                    <svg width="35" height="35" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M8 16C9.846 16 11.543 15.365 12.897 14.312L17.586 19.001C17.9765 19.3915 18.6095 19.3915 19 19.001V19.001C19.3905 18.6105 19.3905 17.9775 19 17.587L14.311 12.898C15.365 11.543 16 9.846 16 8C16 3.589 12.411 0 8 0C3.589 0 0 3.589 0 8C0 12.411 3.589 16 8 16ZM8 2C11.309 2 14 4.691 14 8C14 11.309 11.309 14 8 14C4.691 14 2 11.309 2 8C2 4.691 4.691 2 8 2Z" fill="white"/>
+                    </svg>
+                  </div>
+                </span>
+              </div>
+            </form>
+      </div>
+      <div style="overflow-x: auto;">
+        <table class="table" id="table">
+          <tr class="table-top table-font-header">
+            <th class="width-header-status">Status</td>
+            <th class="width-header-name">Name</td>
+            <th class="width-header-genre">Genre</td>
+            <th class="width-header-author">Autor</td>
+          </tr>
+          <template id="template">
+            <tr class="table-content">
+              <td style="vertical-align: middle;" class="table-font width-status">
+                <div>
+                  <svg id="availablestate" class="" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke="grey" d="M19 10C19 11.1819 18.7672 12.3522 18.3149 13.4442C17.8626 14.5361 17.1997 15.5282 16.364 16.364C15.5282 17.1997 14.5361 17.8626 13.4442 18.3149C12.3522 18.7672 11.1819 19 10 19C8.8181 19 7.64778 18.7672 6.55585 18.3149C5.46392 17.8626 4.47177 17.1997 3.63604 16.364C2.80031 15.5282 2.13738 14.5361 1.68508 13.4442C1.23279 12.3522 1 11.1819 1 10C1 7.61305 1.94821 5.32387 3.63604 3.63604C5.32387 1.94821 7.61305 1 10 1C12.3869 1 14.6761 1.94821 16.364 3.63604C18.0518 5.32387 19 7.61305 19 10Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+              </td>
+              <td style="vertical-align: middle;" class="table-font width-name"><div><a class="booklink" id="bname" href=""></a></div></td>
+              <td style="vertical-align: middle;" class="table-font width-genre"><div><a class="booklink" id="bgenre" href=""></a></div></td>
+              <td style="vertical-align: middle;" class="table-font width-author"><div><a class="booklink" id="bauthor" href=""></a></div></td>
+            </tr>
+          </template>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="d-flex justify-content-center" id="spinner">
+    <div class="spinner-border" role="status" style="color: white;margin-bottom: 40px; margin-top: 40px;">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+</div>
+
+<script>
+  var template = document.querySelector("#template");
+  var table = document.querySelector("#table");
+  start = 0
+  var intersectionEntries;
+  const intersectionObserver = new IntersectionObserver(entries => {
+    intersectionEntries = entries;
+        if(entries[0].intersectionRatio <= 0) {
+            return;
+        }
+        load();
+    });
+    try {
+        intersectionObserver.observe(document.getElementById("spinner"));
+    } catch (error) {
+        
+    }
+  function load() {
+    fetch("/book?s="+start)
+      .then(response => response.json()).then(data => {
+          if(data.length) {
+              for(let i = 0; i< data.length;i++) {
+                  start++;
+                  let clone = template.content.cloneNode(true);
+                  if(data[i].available != 0) {
+                    clone.querySelector("#availablestate").classList.add("bookavailable")
+                  } else {
+                    clone.querySelector("#availablestate").classList.add("bookunavailable")
+                  }
+                  clone.querySelector("#bname").innerHTML = data[i].name
+                  clone.querySelector("#bname").href = "/book/"+data[i]._id
+                  clone.querySelector("#bgenre").innerHTML = data[i].genre
+                  clone.querySelector("#bgenre").href = "/search?p="+data[i].genre
+                  clone.querySelector("#bauthor").innerHTML = data[i].author
+                  clone.querySelector("#bauthor").href = "/search?p="+data[i].author
+                  table.appendChild(clone)
+              }
+              if(intersectionEntries[0].isIntersecting) {
+                load()
+              }
+              if(data.length < 20) {
+                console.log("<20")
+                load()
+              }
+          } else if (!data.length){
+            console.log("!data")
+            intersectionObserver.unobserve(document.getElementById("spinner"));
+            document.getElementById("spinner").parentNode.removeChild(document.getElementById("spinner"));
+          }
+      }).catch(err => 
+          console.error(err)
+      );
+  }
+</script>

@@ -1,0 +1,337 @@
+
+<%- include("./partials/header.ejs") %>
+<%- include("./partials/sidebar.ejs") %>
+
+<div class="container" style="padding-left: 0; padding-right: 0;margin-top: 50px;">
+    <div class="row">
+        <div class="col-lg-12 col-xl-12 align-middle" id="quickinput_col" style="height: auto;">
+            <div class="box-quickinput">
+                <form action="/searchv2" method="GET">
+                    <div class="input-group">
+                        <input
+                        type="search"
+                        id="searchbar"
+                        class="form-control quickinput"
+                        name="p"
+                        autocomplete="off"
+                        value="<%= param %>"/>
+                        <span class="input-group-btn">
+                        <div class="quickinput-button">
+                            <svg width="35" height="35" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M8 16C9.846 16 11.543 15.365 12.897 14.312L17.586 19.001C17.9765 19.3915 18.6095 19.3915 19 19.001V19.001C19.3905 18.6105 19.3905 17.9775 19 17.587L14.311 12.898C15.365 11.543 16 9.846 16 8C16 3.589 12.411 0 8 0C3.589 0 0 3.589 0 8C0 12.411 3.589 16 8 16ZM8 2C11.309 2 14 4.691 14 8C14 11.309 11.309 14 8 14C4.691 14 2 11.309 2 8C2 4.691 4.691 2 8 2Z" fill="white"/>
+                            </svg>
+                        </div>
+                        </span>
+                    </div>
+                </form>
+                <div class="bgdiv" id="bgdiv">
+                </div>
+                <div class="searchbar">
+                    <div>
+                        <h5 id="categorybuttonname" title="n">Name</h5>
+                    </div>
+                    <div>
+                        <h5 id="categorybuttongenre" title="g">Genre</h5>
+                    </div>
+                    <div>
+                        <h5 id="categorybuttonauthor" title="a">Autor</h5>
+                    </div>
+                    <div>
+                        <h5 id="categorybuttonpublisher" title="p">Verlag</h5>
+                    </div>
+                    <div>
+                        <h5 id="categorybuttonisbn" title="i">ISBN</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<template id="templatename">
+    <ul class="animated fadeIn" style="animation-duration: 0.4s;">
+        <div class="search-entry">
+            <li>
+                <a href="" id="anchor"></a>
+            </li>
+        </div>
+    </ul>
+</template>
+<template id="templategenre">
+    <ul class="animated fadeIn" style="animation-duration: 0.4s;">
+        <div class="search-entry">
+            <li>
+                <a href="" id="anchor"></a>
+            </li>
+            <li>
+                <span>Genre: </span>
+                <a id="anchorgenre" href=""></a>
+            </li>
+        </div>
+    </ul>
+</template>
+<template id="templateauthor">
+    <ul class="animated fadeIn" style="animation-duration: 0.4s;">
+        <div class="search-entry">
+            <li>
+                <a href="" id="anchor"></a>
+            </li>
+            <li>
+                <span>Autor: </span>
+                <a id="anchorauthor" href=""></a>
+            </li>
+        </div>
+    </ul>
+</template>
+<template id="templateISBN">
+    <ul class="animated fadeIn" style="animation-duration: 0.4s;">
+        <div class="search-entry">
+            <li>
+                <a href="" id="anchor"></a>
+            </li>
+            <li>
+                <span>ISBN: </span>
+                <a id="anchorISBN" href=""></a>
+            </li>
+        </div>
+    </ul>
+</template>
+<template id="templatepublisher">
+    <ul class="animated fadeIn" style="animation-duration: 0.4s;">
+        <div class="search-entry">
+            <li>
+                <a href="" id="anchor"></a>
+            </li>
+            <li>
+                <span>Verlag: </span>
+                <a id="anchorpublisher" href=""></a>
+            </li>
+        </div>
+    </ul>
+</template>
+
+<div id="container" class="container shadow-dreamy searchcontainer">
+    <div class="row search" id="row">
+    </div>
+</div>
+<div class="d-flex justify-content-center" id="spinner">
+    <div class="spinner-border" role="status" style="color: white;margin-bottom: 40px;">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+</div>
+
+<script>
+    var resultscount = Number;
+    var filter = "n";
+    var intersectionEntries;
+    var currentSelectedButton = String;
+    var isCleared = false;
+    var start = [0,0,0,0,0]
+    var gotData = [false,false,false,false,false]
+    const spinner = document.getElementById("spinner")
+    var param = document.getElementById("searchbar").value;
+    const container = document.querySelector('#container');
+    const row = document.getElementById('row');
+    const bgdiv = document.getElementById("bgdiv")
+    const template = [
+        document.querySelector("#templatename"),
+        document.querySelector("#templategenre"),
+        document.querySelector("#templateauthor"),
+        document.querySelector("#templateISBN"),
+        document.querySelector("#templatepublisher")
+        ]
+    const noSearchResult = document.createElement('h2');
+    noSearchResult.innerHTML = `Keine Suchergebnisse in dieser Kategorie für "${param}"`
+    //const row = [
+    //    document.querySelector("#rowname"),
+    //    document.querySelector("#rowgenre"),
+    //    document.querySelector("#rowauthor"),
+    //    document.querySelector("#rowISBN"),
+    //    document.querySelector("#rowpublisher")
+    //]
+    //const buttons = document.querySelectorAll("#categorybutton")
+    const buttons = document.querySelectorAll('.searchbar > div > h5')
+    const intersectionObserver = new IntersectionObserver(entries => {
+        intersectionEntries = entries;
+        if(entries[0].intersectionRatio <= 0) {
+            return;
+        }
+        param ? load(filter) : handleNoParam()
+    });
+
+    function appendResultsCount(results) {
+        var text = document.createElement('h5')
+        text.id = "rescount"
+        if(results <= 1) {
+            text.innerHTML = results+ " Ergebnis"
+        } else {
+            text.innerHTML = results+ " Ergebnisse"
+        }
+        row.append(text)
+    }
+
+    function clearDiv() {
+        while(row.hasChildNodes()) {
+            row.removeChild(row.lastChild)
+        }
+    }
+    
+    function handleClick() {
+        var btncoords = this.getBoundingClientRect();
+        currentSelectedButton = this.id;
+        bgdiv.style.width = btncoords.width+25+"px";
+        bgdiv.style.left = btncoords.left-12.5+"px";
+        filter = this.title
+        start.fill(0)
+        clearDiv()
+        observe()
+    }
+    
+    function handlePageLoad() {
+        var btncoords = buttons[0].getBoundingClientRect();
+        currentSelectedButton = buttons[0].id;
+        bgdiv.style.width = btncoords.width+25+"px";
+        bgdiv.style.left = btncoords.left-12.5+"px";
+        //bgdiv.style.top = btncoords.top-5+"px";
+        param ? observe() : handleNoParam()
+    }
+    
+    function handleWindowResize() {
+        setTimeout(function() {
+            btncoords = document.getElementById(currentSelectedButton).getBoundingClientRect();
+            bgdiv.style.width = btncoords.width+25+"px";
+            bgdiv.style.left = btncoords.left-12.5+"px"
+        },200)
+    }
+
+    function handleNoParam() {
+        unobserve()
+        var text = document.createElement('h4')
+        text.style = "margin-bottom: 0;color: #c2c2c2;font-family: manropesemibold;text-align: center;"
+        text.innerHTML = "Gib etwas ein, um zu suchen"
+        row.append(text)
+    }
+
+    function observe() {
+        try {
+            intersectionObserver.observe(document.getElementById("spinner"));
+        } catch (error) {
+            //doesn't matter
+        }
+        document.getElementById('spinner').style.display = 'flex';
+    }
+    
+    function unobserve() {
+        try {
+            intersectionObserver.unobserve(document.getElementById("spinner"));
+        } catch (e) {
+            //doesn't matter
+        }
+        document.getElementById('spinner').style = 'display: none !important;';
+    }
+
+    function fetchData(filter) {
+        var index = Number
+        switch (filter) {
+            case "n":
+                index = 0
+                break;
+            case "g":
+                index = 1
+                break;
+            case "a":
+                index = 2
+                break;
+            case "i":
+                index = 3
+                break;
+            case "p":
+                index = 4
+                break;
+            default:
+                break;
+        }
+
+        fetch("/searchv2?p="+param+"&s="+start[index]+"&f="+filter)
+            .then(response => response.json()).then(data => {
+                if(data.results.length) {
+                    if(!document.getElementById('rescount')) {
+                        appendResultsCount(data.resultscount)
+                    }
+                    gotData[index] = true;
+                    for(let i = 0; i< data.results.length;i++) {
+                        let clone = template[index].content.cloneNode(true);
+                        clone.querySelector("#anchor").innerHTML = data.results[i].name;
+                        clone.querySelector("#anchor").href="/book/"+data.results[i]._id;
+                        switch (filter) {
+                            case "g":
+                                clone.querySelector("#anchorgenre").href="/search?p="+data.results[i].genre;
+                                clone.querySelector("#anchorgenre").innerHTML=data.results[i].genre;
+                                break;
+                            case "a":
+                                clone.querySelector("#anchorauthor").href="/search?p="+data.results[i].author;
+                                clone.querySelector("#anchorauthor").innerHTML=data.results[i].author;
+                                break;
+                            case "i":
+                                clone.querySelector("#anchorISBN").href="/search?p="+data.results[i].ISBN;
+                                clone.querySelector("#anchorISBN").innerHTML=data.results[i].ISBN;
+                                break;
+                            case "p":
+                                clone.querySelector("#anchorpublisher").href="/search?p="+data.results[i].publisher;
+                                clone.querySelector("#anchorpublisher").innerHTML=data.results[i].publisher;
+                                break;
+                            default:
+                                break;
+                        }
+                        row.appendChild(clone)
+                        start[index]++
+                    }
+                    if(data.results.length < 20) {
+                        load(filter)
+                    }
+                } else if (!data.results.length) {
+                    if(!gotData[index]) {
+                        row.appendChild(noSearchResult)
+                    }
+                    start[index] = 0;
+                    unobserve()
+                }
+        }).catch(err => console.error(err))
+    }
+
+    function load(f) {
+        switch(f) {
+            case "n":
+                filter = "n"
+                observe()
+                fetchData(filter)
+                break;
+            case "g":
+                filter = "g"
+                observe()
+                fetchData(filter)
+                break;
+            case "a":
+                filter = "a"
+                observe()
+                fetchData(filter)
+                break;
+            case "i":
+                filter = "i"
+                observe()
+                fetchData(filter)
+                break;
+            case "p":
+                filter = "p"
+                observe()
+                fetchData(filter)
+                break;
+            case "x":
+                return
+        }
+    }
+
+    buttons.forEach(button => button.addEventListener('mouseup', handleClick))
+    window.onload = handlePageLoad();
+    window.addEventListener('resize', () => handleWindowResize());
+</script>

@@ -1,0 +1,64 @@
+
+<%- include("./partials/header.ejs") %>
+<%- include("./partials/sidebar.ejs") %>
+
+
+  <div class="container shadow-dreamy standardcontainer" id="container">
+
+      <div class="row">
+          <h1 class="bookstuffaddtext">Buch hinzufügen</h1>
+      </div>
+
+        <form id="addbookform" class="bookaddform" style="display: grid;" method="POST" action="javascript:void(0);">
+          <div class="addbookdiv">
+            <div class="bookdisplay">
+              <label class="bookname" style="background-color:#4d4d4d; width: 100px;">Name:</label>
+              <input style="border-top-left-radius: 0; border-bottom-left-radius: 0; margin-right: auto;" class="form-control bookdata" name="name" required autocomplete="off"/>
+            </div>
+            <div class="bookdisplay">
+              <label class="bookname" style="background-color:#4d4d4d; width: 100px;">Autor:</label>
+              <input style="border-top-left-radius: 0; border-bottom-left-radius: 0; margin-right: auto;" class="form-control bookdata" name="author" required autocomplete="off"/>
+            </div>
+            <div class="bookdisplay">
+              <label class="bookname" style="background-color:#4d4d4d; width: 100px;">Genre:</label>
+              <input style="border-top-left-radius: 0; border-bottom-left-radius: 0; margin-right: auto;" class="form-control bookdata" name="genre" required autocomplete="off"/>
+            </div>
+            <div class="bookdisplay">
+              <label class="bookname" style="background-color:#4d4d4d; width: 100px;">Verlag:</label>
+              <input style="border-top-left-radius: 0; border-bottom-left-radius: 0; margin-right: auto;" class="form-control bookdata" name="publisher" required autocomplete="off"/>
+            </div>
+            <div class="bookdisplay">
+              <label class="bookname" style="background-color:#4d4d4d; width: 100px;">ISBN:</label>
+              <input style="border-top-left-radius: 0; border-bottom-left-radius: 0; margin-right: auto;" class="form-control bookdata" name="isbn" autocomplete="off"/>
+            </div>
+            <div class="bookdisplay">
+              <label class="bookname" style="background-color:#4d4d4d; width: 100px;">Anzahl:</label>
+              <input onkeyup="check()" id="count" style="border-top-left-radius: 0; border-bottom-left-radius: 0; margin-right: auto;" class="form-control bookdata" name="count" required autocomplete="off"/>
+            </div>
+          </div>
+          <div style="display: grid; place-items: center;">
+            <h5 id="usrdialogue" style="font-family: manrope; color: red; text-align: center; font-size: 1.05rem;"></h5>
+            <input id="submitbtn" class="addbookbtn" type="submit" value="Hinzufügen" type="submit">
+          </div>
+      </form>
+
+    </div>
+    
+  <script>
+    form = document.getElementById("addbookform");
+    btn = document.getElementById("submitbtn");
+
+    function check() {
+      count = document.getElementById('count').value;
+      if(count && count.match(/^[1-9]+$/) == null) { //check if entered value holds digits 0-9
+        document.getElementById('usrdialogue').innerHTML = "Anzahl muss eine gültige Zahl sein."
+        btn.classList.add("disabled")
+        form.action = "javascript:void(0);"
+      } else {
+        document.getElementById('usrdialogue').innerHTML = ""
+        btn.classList.remove("disabled")
+        form.action = "/addbook"
+      }
+    };
+  </script>
+  

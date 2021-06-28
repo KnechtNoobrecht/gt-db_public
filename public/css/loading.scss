@@ -1,0 +1,40 @@
+section {
+  width: 60em;
+  height: 1em;
+  /*background: linear-gradient(20deg,#A3C9E2,#9618F7);*/
+  background: linear-gradient(
+    -45deg,
+    #9708cc,
+    #43c8ff,
+    #9708cc,
+    #43c8ff,
+    #9708cc,
+    #43c8ff,
+    #9708cc,
+    #43c8ff,
+    #9708cc,
+    #43c8ff,
+    #9708cc,
+    #43c8ff,
+    #9708cc,
+    #43c8ff
+  );
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  background-size: 1000% 1000%;
+  animation: backgroundanimation 17s linear infinite;
+}
+
+@keyframes backgroundanimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}

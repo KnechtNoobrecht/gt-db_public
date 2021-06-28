@@ -1,0 +1,404 @@
+::-webkit-input-placeholder {
+  color: #818287;
+  font-family: manropethin;
+}
+
+:-ms-input-placeholder {
+  color: #818287;
+  font-family: manropethin;
+}
+
+::-ms-input-placeholder {
+  color: #818287;
+  font-family: manropethin;
+}
+
+::placeholder {
+  color: #818287;
+  font-family: manropethin;
+}
+
+.rect {
+  visibility: visible;
+  position: relative;
+  width: 400px;
+  padding: 40px;
+  background: #36393f;
+  text-align: center;
+  border-radius: 20px;
+  padding-bottom: 28px;
+  z-index: 9 !important;
+}
+
+.rectapw {
+  height: calc(100vh - 45px);
+  display: -ms-grid;
+  display: grid;
+  place-items: center;
+}
+
+.forgotpw {
+  visibility: visible;
+  position: relative;
+  width: 400px;
+  padding: 40px;
+  background: #5a5f69;
+  text-align: center;
+  border-radius: 20px;
+  padding-bottom: 8px;
+  top: -32px;
+  font-family: manropethin, arial;
+  text-decoration: none;
+  text-align: left;
+  text-align: center;
+  z-index: 8 !important;
+}
+
+.forgotpw a, .forgotpw span {
+  color: #fff !important;
+  text-decoration: none !important;
+  cursor: pointer;
+  outline: none;
+}
+
+.signupbtn a {
+  font-family: manropethin, arial !important;
+  color: #fff;
+  text-decoration: none !important;
+}
+
+.rect h1 {
+  color: white;
+  font-weight: 600;
+  font-family: "manropebold", arial;
+  cursor: default;
+  margin-bottom: 30px;
+}
+
+.fa-user-circle {
+  color: white;
+  font-size: 5rem;
+}
+
+.form-section {
+  position: relative;
+}
+
+.form-label {
+  position: absolute;
+  top: 15px;
+  left: 10px;
+  font-family: coco;
+  font-size: 1em;
+  color: #b0b0b0;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+  cursor: text;
+}
+
+.form-section input:focus + .form-label, .form-section input:valid + .form-label {
+  position: absolute;
+  top: -20px;
+  left: 10px;
+  font-family: coco;
+  font-size: 1em;
+  color: #b0b0b0;
+  cursor: default;
+}
+
+.rect input[type="submit"] {
+  color: white;
+  font-weight: 600;
+  border: 0;
+  display: block;
+  margin: 30px auto 20px auto;
+  outline: none;
+  text-align: start;
+  border: 2px solid #53b581;
+  background: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  -webkit-transition: 0.25s;
+  transition: 0.25s;
+  font-family: manropelight;
+  font-size: 15px;
+}
+
+.rect input[type="submit"]:hover {
+  color: black;
+  border: 2px solid #53b581;
+  background: #53b581;
+}
+
+.rect input[type="text"],
+.rect input[type="password"] {
+  border: 0;
+  background: #40444b;
+  margin: 20px 0;
+  display: block;
+  text-align: start;
+  border: 2px solid #40444b;
+  border-radius: 8px;
+  padding: 10px 10px;
+  width: 100%;
+  outline: none;
+  color: white;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+  font-family: manropelight;
+}
+
+.rect input[type="text"]:hover,
+.rect input[type="password"]:hover {
+  background: #50555e;
+  border: 2px solid #50555e;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+
+.rect input[type="text"]:focus,
+.rect input[type="password"]:focus {
+  background: #50555e;
+  border: 2px solid #50555e;
+  color: white;
+}
+
+::-webkit-input-placeholder {
+  color: #818287;
+  font-family: manropethin;
+}
+
+:-ms-input-placeholder {
+  color: #818287;
+  font-family: manropethin;
+}
+
+::-ms-input-placeholder {
+  color: #818287;
+  font-family: manropethin;
+}
+
+::placeholder {
+  color: #818287;
+  font-family: manropethin;
+}
+
+.rect-signup {
+  width: 400px;
+  padding: 40px;
+  position: relative;
+  background: #36393f;
+  text-align: center;
+  border-radius: 20px;
+  padding-bottom: 28px;
+  z-index: 9 !important;
+}
+
+.rect-signup h1 {
+  color: white;
+  font-weight: 600;
+  font-family: "manropebold", arial;
+  margin-bottom: 30px;
+}
+
+.fa-user-circle signup {
+  color: white;
+  font-size: 5rem;
+}
+
+.fa-times-circle {
+  color: red;
+  font-size: 2rem;
+}
+
+.rect-signup input[type="submit"] {
+  color: white;
+  font-weight: 600;
+  border: 0;
+  display: block;
+  margin: 30px auto 20px auto;
+  outline: none;
+  text-align: start;
+  border: 2px solid #53b581;
+  background: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  -webkit-transition: 0.25s;
+  transition: 0.25s;
+  font-family: manropelight;
+  font-size: 15px;
+}
+
+.rect-signup input[type="submit"]:hover {
+  color: black;
+  border: 2px solid #53b581;
+  background: #53b581;
+}
+
+.rect-signup input[type="text"],
+.rect-signup input[type="password"] {
+  border: 0;
+  background: #40444b;
+  margin: 20px 0;
+  display: block;
+  text-align: start;
+  border: 2px solid #40444b;
+  border-radius: 8px;
+  padding: 10px 10px;
+  width: 100%;
+  outline: none;
+  color: white;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+  font-family: manropelight;
+}
+
+.rect-signup input[type="text"]:hover,
+.rect-signup input[type="password"]:hover {
+  background: #50555e;
+  border: 2px solid #50555e;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+
+.rect-signup input[type="text"]:focus,
+.rect-signup input[type="password"]:focus {
+  background: #50555e;
+  border: 2px solid #50555e;
+  color: white;
+}
+
+.accexisting {
+  visibility: visible;
+  position: relative;
+  width: 400px;
+  padding: 40px;
+  background: #5a5f69;
+  text-align: center;
+  border-radius: 20px;
+  padding-bottom: 8px;
+  padding-top: 60px;
+  top: -52px;
+  font-family: manropethin, arial;
+  text-decoration: none;
+  text-align: center;
+  z-index: 1 !important;
+  text-align: center;
+}
+
+.accexisting a {
+  color: #fff !important;
+  cursor: pointer;
+  outline: none;
+}
+
+.success {
+  display: -ms-grid;
+  display: grid;
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.success svg {
+  -ms-flex-item-align: center !important;
+      -ms-grid-row-align: center !important;
+      align-self: center !important;
+  -ms-grid-column-align: center !important;
+      justify-self: center !important;
+  height: 300px;
+  width: 300px;
+  color: #53b581;
+}
+
+#circle {
+  -webkit-animation: rotation 15s linear infinite;
+          animation: rotation 15s linear infinite;
+}
+
+.success .textheadline {
+  font-family: manropebold, arial;
+  color: #ffffff !important;
+  text-align: center;
+  margin-top: 40px;
+  font-size: 23pt;
+}
+
+.success .text {
+  position: relative;
+  margin-top: 0.7em;
+  font-family: manropelight, arial;
+  color: #9c9c9c !important;
+  text-align: center;
+  font-size: 12pt;
+}
+
+.invalid {
+  border-color: #f04747 !important;
+}
+
+.invalid::-webkit-input-placeholder {
+  color: #f04747 !important;
+}
+
+.invalid:-ms-input-placeholder {
+  color: #f04747 !important;
+}
+
+.invalid::-ms-input-placeholder {
+  color: #f04747 !important;
+}
+
+.invalid::placeholder {
+  color: #f04747 !important;
+}
+
+.shadow-dreamy {
+  -webkit-box-shadow: 0 2px 16px 0 rgba(0, 0, 0, 0.25), 0 3px 15px 8px rgba(0, 0, 0, 0.08);
+          box-shadow: 0 2px 16px 0 rgba(0, 0, 0, 0.25), 0 3px 15px 8px rgba(0, 0, 0, 0.08);
+}
+
+@-webkit-keyframes rotation {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+    -webkit-transform-origin: 50% 50%;
+            transform-origin: 50% 50%;
+  }
+  50% {
+    -webkit-transform: rotate(180deg);
+            transform: rotate(180deg);
+    -webkit-transform-origin: 50% 50%;
+            transform-origin: 50% 50%;
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+    -webkit-transform-origin: 50% 50%;
+            transform-origin: 50% 50%;
+  }
+}
+
+@keyframes rotation {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+    -webkit-transform-origin: 50% 50%;
+            transform-origin: 50% 50%;
+  }
+  50% {
+    -webkit-transform: rotate(180deg);
+            transform: rotate(180deg);
+    -webkit-transform-origin: 50% 50%;
+            transform-origin: 50% 50%;
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+    -webkit-transform-origin: 50% 50%;
+            transform-origin: 50% 50%;
+  }
+}
+/*# sourceMappingURL=welcome.css.map */

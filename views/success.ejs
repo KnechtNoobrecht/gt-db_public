@@ -1,0 +1,37 @@
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="GT-DB Schülerbücherei" />
+    <link rel="stylesheet" href="/css/main.css" type="text/css">
+    <link rel="stylesheet" href="/css/welcome.css" type="text/css">
+    <link rel="stylesheet" href="/css/adminpanel.css" type="text/css">
+    <link rel="stylesheet" href="/css/bootstrap.css" type="text/css">
+    <title>Schülerbücherei</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/resources/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/resources/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/resources/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/resources/favicon/site.webmanifest">
+    <link rel="mask-icon" href="/resources/favicon/safari-pinned-tab.svg" color="#000000">
+    <meta name="msapplication-TileColor" content="#2b5797">
+    <meta name="theme-color" content="#ffffff">
+</head>
+
+<%- include("./partials/header.ejs") %>
+
+
+<div class="success" id="success">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M6 10.6L8.28571 13L14 7" stroke="#53b581" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path id="circle" d="M5.80076 2.63696C6.52396 2.57924 7.21053 2.29487 7.76276 1.82433C8.38676 1.29226 9.17996 1 10 1C10.82 1 11.6132 1.29226 12.2372 1.82433C12.7895 2.29487 13.476 2.57924 14.1992 2.63696C15.0167 2.70199 15.7841 3.0562 16.364 3.63603C16.9438 4.21586 17.298 4.98334 17.363 5.80076C17.4208 6.52396 17.7051 7.21053 18.1757 7.76276C18.7077 8.38676 19 9.17996 19 10C19 10.82 18.7077 11.6132 18.1757 12.2372C17.7051 12.7895 17.4208 13.476 17.363 14.1992C17.298 15.0167 16.9438 15.7841 16.364 16.364C15.7841 16.9438 15.0167 17.298 14.1992 17.363C13.476 17.4208 12.7895 17.7051 12.2372 18.1757C11.6132 18.7077 10.82 19 10 19C9.17996 19 8.38676 18.7077 7.76276 18.1757C7.21053 17.7051 6.52396 17.4208 5.80076 17.363C4.98334 17.298 4.21586 16.9438 3.63603 16.364C3.0562 15.7841 2.70199 15.0167 2.63696 14.1992C2.57924 13.476 2.29487 12.7895 1.82433 12.2372C1.29226 11.6132 1 10.82 1 10C1 9.17996 1.29226 8.38676 1.82433 7.76276C2.29487 7.21053 2.57924 6.52396 2.63696 5.80076C2.70199 4.98334 3.0562 4.21586 3.63603 3.63603C4.21586 3.0562 4.98334 2.70199 5.80076 2.63696Z" stroke="#53b581" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg> 
+    <a style="text-decoration: none;" class="textheadline">Erfolgreich</a>
+    <%if (msg != "") {%><span class="text">Dein Nutzername ist <b style="font-family: manrope;"><%= msg %></b></span><% } %>
+    <span><a id="text" style="text-decoration: none;" class="text">Du wirst in 5 Sekunden weitergeleitet. Falls nicht, klicke </a><a href="/" style="color: #9c9c9c;">hier.</a></span>
+</div>
+
+<script>
+    setTimeout(function () {
+       // after 5 seconds
+       window.location = "/";
+    }, 5000);
+</script>

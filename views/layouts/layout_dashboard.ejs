@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="GT-DB Schülerbücherei" />
+    <link rel="preload" href="/css/main.css" as="style">
+    <link rel="preload" href="/css/welcome.css" as="style">
+    <link rel="preload" href="/css/adminpanel.css" as="style">
+    <link rel="preload" href="/css/bootstrap.css" as="style">
+    <link rel="preload" href="/resources/fonts/manrope/bold.woff" as="font" crossorigin="">
+    <link rel="preload" href="/resources/fonts/manrope/light.woff" as="font" crossorigin="">
+    <link rel="preload" href="/resources/fonts/manrope/regular.woff" as="font" crossorigin="">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/welcome.css">
+    <link rel="stylesheet" href="/css/adminpanel.css">
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#202225">
+    <meta name="msapplication-TileColor" content="#202225">
+    <meta name="theme-color" content="#ffffff">
+    <title><%= title %></title>
+</head>
+<noscript style="color:red">You need to enable JavaScript to run this app.</noscript style="color:red">
+<body id="body" class="loading">
+    <%- body %>
+</body>
+
+<script>
+    document.addEventListener('readystatechange', function(event) {
+        if (document.readyState === "complete") {
+        document.getElementById('body').classList.remove("loading")
+        }
+    }); 
+</script>
+
+</html>

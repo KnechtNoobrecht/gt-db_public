@@ -1,0 +1,61 @@
+<%- include("./partials/header.ejs") %>
+<%- include("./partials/sidebar.ejs") %>
+
+<div class="container shadow-dreamy standardcontainer" id="container">
+    <%j=1%>
+    <%for(let i=0; i<users.length; i++) {%>
+        <div class="user-entry">
+                <div class="administration-user-left">
+                    <div class="userimgdiv">
+                        <img src="/resources/userimg/<%= users[i].userimg %>.png" alt="Profilbild" loading=lazy>
+                    </div>
+                    <div class="admin-uname-parent">
+                        <div class="administration-username">
+                            <h4>
+                                <%= users[i].firstname + " " + users[i].lastname %>
+                            </h4>
+                            <h6>
+                                <%= users[i].username %>
+                            </h6>
+                    </div>
+                    </div>
+                </div>
+                <div class="administration-user-right">
+                    <div class="administration-user-roles">
+                        <div>
+                            <h5>Manager</h5>
+                            <label onmouseup="toggleRole('manager','uid<%=users[i]._id%>','checkbox<%=j%>')" class="switch">
+                                <input id="checkbox<%=j%>" type="checkbox" <% if(users[i].manager) {%> checked <%}%> >
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <!--<div>
+                            <h5>Administrator</h5>
+                            <label onmouseup="toggleRole('admin','uid<%=users[i]._id%>','checkbox<%=j+1%>')" class="switch">
+                                <input id="checkbox<%=j+1%>" type="checkbox" <% if(users[i].admin) {%> checked <%}%> >
+                                <span class="slider"></span>
+                            </label>
+                        </div>-->
+                    </div>
+                </div>
+        </div>
+        <%j+=2%>
+    <% } %>
+</div>
+
+<script>
+    function toggleRole(role,uid,bid) {
+        button = document.getElementById(bid)
+        button.checked = !button.checked
+        $.ajax({
+            url: "/user/toggleRole",
+            type: "POST",
+            data: {
+                role: role,
+                id: uid.split("uid")[1]
+            },success: function() {
+                button.checked = !button.checked
+            }
+        })
+    }
+</script>
