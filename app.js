@@ -612,22 +612,27 @@ app.post("/createresetid", async function (req, res) {
     html: "<body style='margin:0;padding:0;width:100%;height:100%;'><div> <span style='font-family: Arial, Helvetica, sans-serif;'>Moin.</span> <br><br> <span style='font-family: Arial, Helvetica, sans-serif;' >Hier ist der Link um Dein Passwort zurückzusetzen: </span> <a style='left:50%;top: 30%;position:absolute;transform: translateX(-50%);text-decoration:underline;font-family: Arial, Helvetica, sans-serif;padding: 50px;text-align: center;border-radius: 8px;vertical-align: middle;transition: .25s;border: 1px solid transparent;box-shadow: 0 2px 16px 0 rgba(0, 0, 0, .25), 0 3px 15px 8px rgba(0, 0, 0, 0.08);' href='https://buecherei.gym-trittau.de/reset_password/?uuid="+id+"'>Passwort zurücksetzen</a><br><span style='font-family: Arial, Helvetica, sans-serif;'>Er ist für 15 Minuten gültig.</span><br><br> <span style='font-family: Arial, Helvetica, sans-serif;'> Dein Schülerbücherei-Team </span> </div></body>"
   }
   date = Date.now()+1000*60*15 // 15 minutes in milliseconds
-  await User.updateOne({email: mail},{pwresettime:date,pwresetuuid:id}).then(
-    transporter.sendMail(mailoptions, function (err) {
-      if (err) {
-        console.log(err)
-        req.flash('errormsg','Das hat nicht funktioniert. Vielleicht ist die Mailadresse ungültig.'),
-        res.redirect('/reset_password')
-      } else {
-        req.flash('success','Wir haben Dir einen Link an deine angegebene Mailadresse geschickt. Bitte prüfe auch Deinen Spamordner.'),
-        res.redirect('/reset_password')
-      }
-    }),
-  ).catch(err => {
-    console.trace(err)
-    req.flash('errormsg','Das hat nicht funktioniert. Bitte versuche es später erneut.');
-    res.redirect('/reset_password');
-  });
+  if(User.findOne({email:mail})){
+    await User.updateOne({email: mail},{pwresettime:date,pwresetuuid:id}).then(
+      transporter.sendMail(mailoptions, function (err) {
+        if (err) {
+          console.log(err)
+          req.flash('errormsg','Das hat nicht funktioniert. Vielleicht ist die Mailadresse ungültig.'),
+          res.redirect('/reset_password')
+        } else {
+          req.flash('success','Falls ein Account mit der Mailadresse besteht, haben wir Dir einen Link geschickt. Bitte prüfe auch Deinen Spamordner.'),
+          res.redirect('/reset_password')
+        }
+      }),
+    ).catch(err => {
+      console.trace(err)
+      req.flash('errormsg','Das hat nicht funktioniert. Bitte versuche es später erneut.');
+      res.redirect('/reset_password');
+    })
+  } else {
+    req.flash('success','Falls ein Account mit der Mailadresse besteht, haben wir Dir einen Link geschickt. Bitte prüfe auch Deinen Spamordner.'),
+    res.redirect('/reset_password')
+  }
 });
 
 app.post("/new_password", async function (req, res) {
