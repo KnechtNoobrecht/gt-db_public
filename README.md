@@ -10,6 +10,7 @@
   <li>Ausleihstatus in Echtzeit</li>
   <li>Benutzerkonten</li>
   <li>Mehrere Berechtigungsebenen</li>
+  <li>Suchfunktion</li>
   <li>Modernes, schlichtes Design</li>
 </ul>
 
