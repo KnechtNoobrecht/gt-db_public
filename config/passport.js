@@ -10,18 +10,18 @@ module.exports = function(passport) {
   function(req, username, password, done) {
     password = CryptoJS.SHA256(password).toString(CryptoJS.enc.Base64);
     
-      User.findOne({ username: username}, function(err, user) {
-      if (err) {
-        console.log('Passport error: ' + err)
-        return done(err, req.flash('error','error'));
-      }
-      if (!user) {
-        return done(null, false, req.flash('error','user'));
-      }
-      if (!user.validPassword(password)) {
-        return done(null, false, req.flash('error','pw'));
-      }
-      return done(null, user);
+    User.findOne({$or: [{email: username}, {username: username}]}, function(err, user) {
+    if (err) {
+      console.log('Passport error: ' + err)
+      return done(err, req.flash('error','error'));
+    }
+    if (!user) {
+      return done(null, false, req.flash('error','user'));
+    }
+    if (!user.validPassword(password)) {
+      return done(null, false, req.flash('error','pw'));
+    }
+    return done(null, user);
     });
   }
 ));

@@ -373,11 +373,11 @@ $accentcolor: #F92C47;
   left: -282px;
   z-index: 909 !important;
   height: $sidebarheight;
-  width: 280px;
   box-sizing: border-box;
   box-shadow: 0px 1px 1px 1px rgba($color: #36393f, $alpha: 0.8);
   transition: 0.5s;
   user-select: none;
+  width: 280px;
 }
 
 .blur {
@@ -396,31 +396,29 @@ $accentcolor: #F92C47;
 .sidebar a {
   font-family: manropelight;
   display: block;
-  width: 280px;
   padding-left: 15%;
   line-height: 60px;
   text-decoration: none !important;
 }
 
-.sidebar a:last-child {
-  font-family: manropelight;
-  display: block;
-  width: 280px;
-  padding-left: 15%;
-  line-height: 60px;
-  text-decoration: none !important;
+.sidebar-categories div:first-child {
+  border-radius: 10px 10px 0 0;
 }
 
-.sidebar a:hover {
-  font-family: manropelight;
-  display: block;
-  width: 280px;
-  padding-left: 15%;
-  line-height: 60px;
-  text-decoration: none !important;
-  background-color: rgba($color: #212529, $alpha: 0.8);
-  transition: 0.4s;
-  transition-property: background;
+.sidebar-categories div:last-child {
+  border-radius: 0 0 10px 10px;
+}
+
+.sidebar-categories div:hover {
+  background-color: darken($color: rgb(40, 43, 49), $amount: 2%);
+
+}
+
+.sidebar-categories {
+  border-radius: 10px;
+  background-color: rgb(40, 43, 49);
+  width: 90%;
+  margin-left: 5%;
 }
 
 .avatar {
