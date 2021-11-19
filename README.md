@@ -258,6 +258,8 @@ db.createUser(
   }
 )
 ```
+Als letztes muss noch ein Text-Index erstellt werden.</br>
+Dies tun Sie, indem Sie `use gt-db` gefolgt von</br>`db.books.createIndex({name:"text", description:"text"}, {default_language: "german"})` ausführen.</br>
 Mit `exit` schließen Sie das Ganze ab.</br>
 Bei Problemen lesen Sie bitte <a href="https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/" target="_blank" rel="noopener noreferrer">diesen Artikel.</a></br>
 
