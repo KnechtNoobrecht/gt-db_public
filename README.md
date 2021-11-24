@@ -14,7 +14,16 @@
   <li>Modernes, schlichtes Design</li>
 </ul>
 
-# Anleitung
+# Gliederung
+[Changelog](#changelog)</br>
+[Anleitung](#anleitung)</br>
+[Installation](#installation)
+
+# <a name="changelog"></a> Changelog
+#### 23.11.2021
+<b>Neues Feature:</b> Die Suchfunktion unterstützt nun die direkte Suche eines Begriffs in einer bestimmten Kategorie. Beispielsweise per Link.
+
+# <a name="anleitung"></a> Anleitung
 
 ### Registrieren und Anmelden
 
@@ -183,7 +192,7 @@ Mit dem eingekreisten Kreuz könnt ihr die Ausleihe beenden, wenn das Buch zurü
 </p>
 
 
-# Installation
+# <a name="installation"></a> Installation
 Das Ziel dieser Anleitung ist es, alle Programme so zu installieren und einzustellen, dass die Software autark läuft.
 Konkret heißt das, dass im Falle eines Neustarts die Programme von selbst gestartet werden und kein weiterer Benutzereingriff notwendig ist.
 Für diese Anleitung nutze ich Ubuntu Server 20.04 als Betriebssystem.</br>
