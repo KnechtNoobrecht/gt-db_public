@@ -238,6 +238,10 @@ Anschließend erstellen Sie vier Einträge.
     Zu Testzwecken empfehle ich, einen Port zu wählen, der nicht `80` oder `443` ist, da Linux diese Standardmäßig blockiert, beziehungsweise Adminrechte erfordern,        was aber nicht praktikabel ist.
     
     Beispiel: `SRVPORT="4434"`
+6. `COOKIESECRET`</br>
+   Ein Passwort, mit dem die Cookies verschlüsselt werden.
+   
+   Beispiel: `COOKIESECRET="5Ut18QEnbjTzv2hH"`
     
 ### MongoDB konfigurieren:
 In dem Installationsverzeichnis `gt-db_public` erstellen Sie den Ordner `db` (oder nennen Sie ihn wie Sie möchten) indem Sie `mkdir db` ausführen.</br>
