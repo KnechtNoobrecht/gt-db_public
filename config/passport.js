@@ -19,6 +19,7 @@ module.exports = function(passport) {
       return done(null, false, req.flash('error','user'));
     }
     if (!user.validPassword(password)) {
+      req.flash('username',username)
       return done(null, false, req.flash('error','pw'));
     }
     return done(null, user);

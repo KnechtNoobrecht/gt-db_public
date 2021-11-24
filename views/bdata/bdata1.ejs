@@ -1,43 +1,5 @@
-<th>
-    <div class="cover">
-        <div class="coverdiv">
-            <% if(book.available == book.count) { %>
-            <img class="coverimg" src="/resources/bookimg/<%= book.cover %>.png" alt="book cover">
-            <% } else { %>
-            <img class="coverimg unavailable" src="/resources/bookimg/<%= book.cover %>.png" alt="book cover">
-            <% } %>
-        </div>
-    </div>
-</th>
-<th class="details" valign="top">
-    <h1 class="bookdetailsheader"><%= book.name %></h1>
-    <form>
-        <div class="bookdisplay">
-            <input class="bookname" value="Autor:" readonly autocomplete="off"/>
-            <input class="form-control bookdata" value="<%= book.author %>" readonly autocomplete="off"/>
-        </div>
-        <div class="bookdisplay">
-            <input class="bookname" value="Genre:" readonly autocomplete="off"/>
-            <input class="form-control bookdata" value="<%= book.genre %>" readonly autocomplete="off"/>
-        </div>
-        <div class="bookdisplay">
-            <input class="bookname" value="Verlag:" readonly autocomplete="off"/>
-            <input class="form-control bookdata" value="<%= book.publisher %>" readonly autocomplete="off"/>
-        </div>
-        <div class="bookdisplay">
-            <input class="bookname" value="ISBN:" readonly autocomplete="off"/>
-            <% if(book.ISBN) { %>
-            <input class="form-control bookdata" value="<%= book.ISBN %>" readonly autocomplete="off"/>
-            <% } else {%>
-            <input class="form-control bookdata" value="N/A" readonly autocomplete="off"/>
-            <% }%>
-        </div>
-        <div class="bookdisplay">
-            <input class="bookname" value="Anzahl:" readonly autocomplete="off"/>
-            <% if (book.available !== book.count) {%>
-            <input class="form-control bookdata" value="<%= book.count %> (<%= book.available %> verfügbar)" readonly autocomplete="off"/>
-            <% } else { %>
-            <input class="form-control bookdata" value="<%= book.count %>" readonly autocomplete="off"/>
-            <% } %>
-        </div>
-    </form>
+<% if(book.available == book.count && book.available > 0) { %>
+<img class="coverimg" src="/resources/bookimg/<%= book.cover %>.png" alt="book cover">
+<% } else { %>
+<img class="coverimg unavailable" src="/resources/bookimg/<%= book.cover %>.png" alt="book cover">
+<% } %>

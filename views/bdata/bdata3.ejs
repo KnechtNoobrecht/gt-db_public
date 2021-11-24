@@ -1,16 +1,20 @@
-<tr class="bookstufftr">
-    <td class="bookstuffusers -l">Name</td>
-    <td class="bookstuffusers -c">Klasse</td>
-    <td class="bookstuffusers -r">Zeitraum</td>
-</tr>
-<% for(let i=0; i < bhistory.length; i++){ %>
-<tr class="bookstufftr">
-    <td class="bookstuffusersdata"><%= bhistory[i].name %></td>
-    <td class="bookstuffusersdata-c"><%= bhistory[i].class %></td>
-    <td <% if(bhistory[i].active == true) { %> class="bookstuffusersdata-date" <% } else { %>
-        class="bookstuffusersdata-date-inactive" <% } %>><%= bhistory[i].date %>
-        <% if (bhistory[i].active == true) {%><a title="Austragen" class="bookejs-a"
-            href="/book/drop/id=<%= bhistory[i].id %>&bid=<%= bhistory[i].bookid %>"><i
-                class="fas fa-times-circle bookejs-i"></i></a><% }  %> </td>
-</tr>
-<% } %>
+<tbody>
+    <tr class="bookstufftr">
+        <td class="bookstuffusers -l">Name</td>
+        <td class="bookstuffusers -c">Klasse</td>
+        <td class="bookstuffusers -r">Zeitraum</td>
+    </tr>
+      <% for(let i=0; i < bhistory.length; i++) { %>
+    <tr class="bookstufftr">
+        <td class="bookstuffusersdata"><%= bhistory[i].name %></td>
+        <td class="bookstuffusersdata-c"><%= bhistory[i].class %></td>
+        <td <% if(bhistory[i].expiring_at != "0") { %> class="bookstuffusersdata-date" style="padding-bottom: 25px;"<% } else { %> class="bookstuffusersdata-date-inactive" <% } %>> 
+          <%= bhistory[i].date %>
+        <% if (bhistory[i].expiring_at != 0) {%>
+        <a title="Austragen" class="bookejs-a"
+            href="/book/drop/id=<%= bhistory[i].id %>&bid=<%= bhistory[i].bookid %>">
+            <svg class="bookejs-i" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        </a><% }  %> </td>
+    </tr>
+    <% } %>
+</tbody>

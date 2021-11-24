@@ -1,15 +1,35 @@
-<form action="/book/submit" method="POST" class="bookactionformdiv">
-    <% if(book.available !== book.count) { %>
-    <input name="name" class="baform-n disabled" type="text" placeholder="Name" autocomplete="off">
-    <input name="class" class="baform disabled" type="text" placeholder="Klasse" autocomplete="off">
-    <input name="date" class="baform disabled" type="text" placeholder="Datum"
-        value="<%= date %>" autocomplete="off">
-    <input class="baform-s disabled" type="submit" value="Verleihen">
+<form action="/book/submit" method="POST">
+    <% if(book.available === 0) { %>
+      <div class="row" style="margin-left: 15px;margin-right: 15px">
+        <div class="col-md-3" style="padding-right: 0; padding-left: 0;">
+          <input name="name" class="baform-n disabled" type="text" placeholder="Name" required autocomplete="off">
+        </div>
+        <div class="col-md-3" style="padding-right: 0; padding-left: 0;">
+          <input name="class" class="baform disabled" type="text" placeholder="Klasse" required autocomplete="off">
+        </div>
+        <div class="col-md-3" style="padding-right: 0; padding-left: 0;">
+          <input name="date" class="baform disabled" type="text" placeholder="Datum" value="<%= date %>" required autocomplete="off">
+        </div>
+        <div class="col-md-3" style="padding-right: 0; padding-left: 0;">
+          <input class="baform-s disabled" type="submit" value="Verleihen" autocomplete="off">
+        </div>
+      </div>
     <% } else { %>
-    <input name="name" class="baform-n" type="text" placeholder="Name" autocomplete="off">
-    <input name="class" class="baform" type="text" placeholder="Klasse" autocomplete="off">
-    <input name="date" class="baform" type="text" placeholder="Datum" value="<%= date %>" autocomplete="off">
-    <input class="baform-s" type="submit" value="Verleihen">
+      <div class="row" style="margin-left: 15px;margin-right: 15px">
+        <div class="col-md-3" style="padding-right: 0; padding-left: 0;">
+          <input name="name" class="baform-n" type="text" placeholder="Name" required autocomplete="off">
+        </div>
+        <div class="col-md-3" style="padding-right: 0; padding-left: 0;">
+          <input name="class" class="baform" type="text" placeholder="Klasse" required autocomplete="off">
+        </div>
+        <div class="col-md-3" style="padding-right: 0; padding-left: 0;">
+          <input name="date" class="baform" type="text" placeholder="Datum" value="<%= date %>" required autocomplete="off">
+        </div>
+        <div class="col-md-3" style="padding-right: 0; padding-left: 0;">
+          <input class="baform-s" type="submit" value="Verleihen">
+        </div>
+      </div>
     <% } %>
+    <input type="text" style="display:none;" value="<%=book.name%>" name="bookname">
     <input class="bookidinvis" name="bookid" type="text" value="<%= book.id %>">
 </form>

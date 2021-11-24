@@ -2,371 +2,353 @@
 <%- include("./partials/header.ejs") %>
 <%- include("./partials/sidebar.ejs") %>
 
-<div class="container" style="padding-left: 0; padding-right: 0;margin-top: 50px;" id="container" onclick="document.getElementById('body').classList.remove('body-lock');document.getElementById('sidebar').classList.remove('slide');document.getElementById('nav-icon').classList.remove('open');this.classList.remove('container-blur')" onclick="document.getElementById('body').classList.remove('body-lock');document.getElementById('sidebar').classList.remove('slide');document.getElementById('nav-icon').classList.remove('open');this.classList.remove('container-blur')">
+<div class="standardcontainer" style="padding-left: 0; padding-right: 0;margin-top: 50px;">
     <div class="row">
         <div class="col-lg-12 col-xl-12 align-middle" id="quickinput_col" style="height: auto;">
-          <div class="box-quickinput">
-                <form action="/searchv2" method="GET">
-                  <div class="input-group">
-                    <input
-                      type="search"
-                      id="searchbar"
-                      class="form-control quickinput"
-                      name="p"
-                      autocomplete="off"
-                      value="<%= param %>"
-                    />
-                    <span class="input-group-btn">
-                        <div class="quickinput-button">
-                            <svg width="35" height="35" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                              <path d="M8 16C9.846 16 11.543 15.365 12.897 14.312L17.586 19.001C17.9765 19.3915 18.6095 19.3915 19 19.001V19.001C19.3905 18.6105 19.3905 17.9775 19 17.587L14.311 12.898C15.365 11.543 16 9.846 16 8C16 3.589 12.411 0 8 0C3.589 0 0 3.589 0 8C0 12.411 3.589 16 8 16ZM8 2C11.309 2 14 4.691 14 8C14 11.309 11.309 14 8 14C4.691 14 2 11.309 2 8C2 4.691 4.691 2 8 2Z" fill="white"/>
-                            </svg>
-                          </div>
-                    </span>
-                  </div>
-                </form>
-          </div>
+            <div class="box-quickinput-searchv2">
+                <form action="/search" method="GET" id="searchform">
+                    <div class="input-group input-group-searchv2">
+                      <div class="quickinput-button">
+                        <svg width="35" height="35" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M8 16C9.846 16 11.543 15.365 12.897 14.312L17.586 19.001C17.9765 19.3915 18.6095 19.3915 19 19.001V19.001C19.3905 18.6105 19.3905 17.9775 19 17.587L14.311 12.898C15.365 11.543 16 9.846 16 8C16 3.589 12.411 0 8 0C3.589 0 0 3.589 0 8C0 12.411 3.589 16 8 16ZM8 2C11.309 2 14 4.691 14 8C14 11.309 11.309 14 8 14C4.691 14 2 11.309 2 8C2 4.691 4.691 2 8 2Z" fill="white"/>
+                        </svg>
+                      </div>
+                      <input
+                        type="search"
+                        id="searchbar"
+                        class="form-control quickinput"
+                        name="p"
+                        autocomplete="off"
+                        value="<%= param %>"/>
+                    </div>
+                  </form>
+                <div class="bgdiv" id="bgdiv">
+                </div>
+                <div class="searchbar">
+                    <div>
+                        <h5 id="categorybuttonname" title="n">Name</h5>
+                    </div>
+                    <div>
+                        <h5 id="categorybuttongenre" title="g">Genre</h5>
+                    </div>
+                    <div>
+                        <h5 id="categorybuttonauthor" title="a">Autor</h5>
+                    </div>
+                    <div>
+                        <h5 id="categorybuttonpublisher" title="p">Verlag</h5>
+                    </div>
+                    <div>
+                        <h5 id="categorybuttonisbn" title="i">ISBN</h5>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
-<% if (resultscount == undefined) { %>
-<% } else if (resultscount > 0) {%>
-    <div id="container" onclick="document.getElementById('body').classList.remove('body-lock');document.getElementById('sidebar').classList.remove('slide');document.getElementById('nav-icon').classList.remove('open');this.classList.remove('container-blur')" onclick="document.getElementById('body').classList.remove('body-lock');document.getElementById('sidebar').classList.remove('slide');document.getElementById('nav-icon').classList.remove('open');this.classList.remove('container-blur')" class="container shadow-dreamy searchcontainer" style="margin-top: 60px;padding: 20px;border-radius: 15px; margin-bottom: 50px;">
-        <% if(resultscount > 1) {%>
-            <h5 id="rescount"><%= resultscount %> Ergebnisse</h5>
-        <% } else if(resultscount == 1) {%>
-            <h5 id="rescount"><%= resultscount %> Ergebnis</h5>
-        <% } %>
-        <div class="row search-name" id="rowname">
-            <template id="templatename">
-                <ul class="animated fadeIn" style="animation-duration: 0.4s;">
-                    <div class="search-entry">
-                        <li>
-                            <a href="" id="anchor"></a>
-                        </li>
-                    </div>
-                </ul>
-            </template>
+
+<template id="templatename">
+    <ul class="animated fadeIn" style="animation-duration: 0.4s;">
+        <div class="search-entry">
+            <li>
+                <a href="" id="anchor"></a>
+            </li>
         </div>
-        <div class="row" id="rowgenre" style="display: none;margin-top:30px">
-            <template id="templategenre">
-                <ul class="animated fadeIn" style="animation-duration: 0.4s;">
-                    <div class="search-entry">
-                        <li>
-                            <a href="" id="anchor"></a>
-                        </li>
-                        <li>
-                            <span>Genre: </span>
-                            <a id="anchorgenre" href=""></a>
-                        </li>
-                    </div>
-                </ul>
-            </template>
+    </ul>
+</template>
+<template id="templategenre">
+    <ul class="animated fadeIn" style="animation-duration: 0.4s;">
+        <div class="search-entry">
+            <li>
+                <a href="" id="anchor"></a>
+            </li>
+            <li>
+                <span>Genre: </span>
+                <a id="anchorgenre" href=""></a>
+            </li>
         </div>
-        <div class="row" id="rowauthor" style="display: none;margin-top:30px">
-            <template id="templateauthor">
-                <ul class="animated fadeIn" style="animation-duration: 0.4s;">
-                    <div class="search-entry">
-                        <li>
-                            <a href="" id="anchor"></a>
-                        </li>
-                        <li>
-                            <span>Autor: </span>
-                            <a id="anchorauthor" href=""></a>
-                        </li>
-                    </div>
-                </ul>
-            </template>
+    </ul>
+</template>
+<template id="templateauthor">
+    <ul class="animated fadeIn" style="animation-duration: 0.4s;">
+        <div class="search-entry">
+            <li>
+                <a href="" id="anchor"></a>
+            </li>
+            <li>
+                <span>Autor: </span>
+                <a id="anchorauthor" href=""></a>
+            </li>
         </div>
-        <div class="row" id="rowISBN" style="display: none;margin-top:30px">
-            <template id="templateISBN">
-                <ul class="animated fadeIn" style="animation-duration: 0.4s;">
-                    <div class="search-entry">
-                        <li>
-                            <a href="" id="anchor"></a>
-                        </li>
-                        <li>
-                            <span>ISBN: </span>
-                            <a id="anchorISBN" href=""></a>
-                        </li>
-                    </div>
-                </ul>
-            </template>
+    </ul>
+</template>
+<template id="templateISBN">
+    <ul class="animated fadeIn" style="animation-duration: 0.4s;">
+        <div class="search-entry">
+            <li>
+                <a href="" id="anchor"></a>
+            </li>
+            <li>
+                <span>ISBN: </span>
+                <a id="anchorISBN" href=""></a>
+            </li>
         </div>
-        <div class="row" id="rowpublisher" style="display: none;margin-top:30px">
-            <template id="templatepublisher">
-                <ul class="animated fadeIn" style="animation-duration: 0.4s;">
-                    <div class="search-entry">
-                        <li>
-                            <a href="" id="anchor"></a>
-                        </li>
-                        <li>
-                            <span>Verlag: </span>
-                            <a id="anchorpublisher" href=""></a>
-                        </li>
-                    </div>
-                </ul>
-            </template>
+    </ul>
+</template>
+<template id="templatepublisher">
+    <ul class="animated fadeIn" style="animation-duration: 0.4s;">
+        <div class="search-entry">
+            <li>
+                <a href="" id="anchor"></a>
+            </li>
+            <li>
+                <span>Verlag: </span>
+                <a id="anchorpublisher" href=""></a>
+            </li>
         </div>
+    </ul>
+</template>
+
+<div id="container" onclick="document.getElementById('body').classList.remove('body-lock');document.getElementById('sidebar').classList.remove('slide');document.getElementById('nav-icon').classList.remove('open');this.classList.remove('container-blur')" onclick="document.getElementById('body').classList.remove('body-lock');document.getElementById('sidebar').classList.remove('slide');document.getElementById('nav-icon').classList.remove('open');this.classList.remove('container-blur')" class="standardcontainer shadow-dreamy searchcontainer">
+    <div class="row search" id="row">
     </div>
-    <div class="d-flex justify-content-center" id="spinner">
-        <div class="spinner-border" role="status" style="color: white;margin-bottom: 40px;">
-          <span class="visually-hidden">Loading...</span>
-        </div>
+</div>
+<div class="d-flex justify-content-center" id="spinner">
+    <div class="spinner-border" role="status" style="color: white;margin-bottom: 40px;">
+      <span class="visually-hidden">Loading</span>
     </div>
-<% } else {%>
-    <div class="container shadow-dreamy searchcontainer" style="margin-top: 60px;padding: 20px;border-radius: 15px; margin-bottom: 50px;">
-        <div class="row">
-            <h2 style="color:white">Keine Suchergebnisse für "<%= param %>"</h2>
-        </div>
-    </div>
-<% } %>
+</div>
 
 <script>
-    var param = "<%=param%>";
-    var templatename = document.querySelector("#templatename");
-    var templategenre = document.querySelector("#templategenre");
-    var templateauthor = document.querySelector("#templateauthor");
-    var templateISBN = document.querySelector("#templateISBN");
-    var templatepublisher = document.querySelector("#templatepublisher");
-    var container = document.querySelector('#container')
-    var param = document.getElementById("searchbar").value;
-    var rowname = document.querySelector("#rowname");
-    var rowgenre = document.querySelector("#rowgenre");
-    var rowauthor = document.querySelector("#rowauthor");
-    var rowISBN = document.querySelector("#rowISBN");
-    var rowpublisher = document.querySelector("#rowpublisher");
-    var h2name = false;
-    var h2genre = false;
-    var h2author = false
-    var h2ISBN = false
-    var h2publisher = false
-    var intersectionEntries;
+    var directSearch = "<%=directSearch%>"
+    var passedFilter = "<%=passedFilter%>"
+    var resultscount = Number
+    var filter = "n"
+    var intersectionEntries
+    var currentSelectedButton = String
+    var isCleared = false
+    var start = [0,0,0,0,0]
+    var gotData = [false,false,false,false,false]
+    const spinner = document.getElementById("spinner")
+    var param = document.getElementById("searchbar").value
+    const container = document.querySelector('#container')
+    const row = document.getElementById('row')
+    const bgdiv = document.getElementById("bgdiv")
+    const template = [
+        document.querySelector("#templatename"),
+        document.querySelector("#templategenre"),
+        document.querySelector("#templateauthor"),
+        document.querySelector("#templateISBN"),
+        document.querySelector("#templatepublisher")]
+    const noSearchResult = document.createElement('h2');
+    noSearchResult.innerHTML = `Keine Suchergebnisse in dieser Kategorie für "${param}"`
+    const buttons = document.querySelectorAll('.searchbar > div > h5')
     const intersectionObserver = new IntersectionObserver(entries => {
-        intersectionEntries = entries;
+        intersectionEntries = entries
         if(entries[0].intersectionRatio <= 0) {
-            return;
+            return
         }
-        load();
-    });
-    try {
-        intersectionObserver.observe(document.getElementById("spinner"));
-    } catch (error) {
-        
+        param ? load(filter) : handleNoParam()
+    })
+    const directsearchClick = {
+        'n': () => {
+            document.getElementById('categorybuttonname').click()
+        },
+        'g': () => {
+            document.getElementById('categorybuttongenre').click()
+        },
+        'a': () => {
+            document.getElementById('categorybuttonauthor').click()
+        },
+        'i': () => {
+            document.getElementById('categorybuttonisbn').click()
+        },
+        'p': () => {
+            document.getElementById('categorybuttonpublisher').click()
+        }
     }
-    startn = 0;
-    startg = 0;
-    starta = 0;
-    starti = 0;
-    startp = 0;
-    filter = 0;
-    function load() {
-        switch (filter) {
-            case 0:
-                f="n"
-                break;
-            case 1:
-                f="g"
-                break;
-            case 2:
-                f="a"
-                break;
-            case 3:
-                f="i"
-                break;
-            case 4:
-                f="p"
-                break;
-            default:
-                try {
-                    intersectionObserver.unobserve(document.getElementById("spinner"));
-                    document.getElementById("spinner").parentNode.removeChild(document.getElementById("spinner"));
-                } catch (e) {
-                    //doesn't matter
-                }
-                f="x"
+
+    function appendResultsCount(results) {
+        var text = document.createElement('h5')
+        text.id = "rescount"
+        if(results <= 1) {
+            text.innerHTML = results+ " Ergebnis"
+        } else {
+            text.innerHTML = results+ " Ergebnisse"
         }
+        row.append(text)
+    }
+
+    function clearDiv() {
+        while(row.hasChildNodes()) {
+            row.removeChild(row.lastChild)
+        }
+    }
+
+    function handledirectSearch() {
+        if(directSearch == "true") {
+            filter = passedFilter
+            directsearchClick[filter]()
+        }
+    }
+    
+    function handleClick() {
+        var btncoords = this.getBoundingClientRect()
+        currentSelectedButton = this.id
+        bgdiv.style.width = btncoords.width+25+"px"
+        bgdiv.style.left = btncoords.left-12.5+"px"
+        filter = this.title
+        start.fill(0)
+        clearDiv()
+        observe()
+    }
+    
+    function handlePageLoad() {
+        var btncoords = buttons[0].getBoundingClientRect()
+        currentSelectedButton = buttons[0].id
+        bgdiv.style.width = btncoords.width+25+"px"
+        bgdiv.style.left = btncoords.left-12.5+"px"
+        param ? observe() : handleNoParam()
+    }
+    
+    function handleWindowResize() {
+        setTimeout(function() {
+            btncoords = document.getElementById(currentSelectedButton).getBoundingClientRect()
+            bgdiv.style.width = btncoords.width+25+"px"
+            bgdiv.style.left = btncoords.left-12.5+"px"
+        },200)
+    }
+
+    function handleNoParam() {
+        unobserve()
+        var text = document.createElement('h4')
+        text.style = "margin-bottom: 0;color: #c2c2c2;font-family: manropesemibold;text-align: center;"
+        text.innerHTML = "Gib etwas ein, um zu suchen"
+        row.append(text)
+    }
+
+    function observe() {
+        try {
+            intersectionObserver.observe(document.getElementById("spinner"))
+        } catch (error) {
+            //doesn't matter
+        }
+        document.getElementById('spinner').style.display = 'flex'
+    }
+    
+    function unobserve() {
+        try {
+            intersectionObserver.unobserve(document.getElementById("spinner"))
+        } catch (e) {
+            //doesn't matter
+        }
+        document.getElementById('spinner').style = 'display: none !important;'
+    }
+
+    function addTransition() {
+        bgdiv.style.transition = "all 0.15s ease-in-out"
+    }
+
+    function fetchData(filter) {
+        var index = Number
+        switch (filter) {
+            case "n":
+                index = 0
+                break
+            case "g":
+                index = 1
+                break
+            case "a":
+                index = 2
+                break
+            case "i":
+                index = 3
+                break
+            case "p":
+                index = 4
+                break
+            default:
+                break
+        }
+
+        fetch("/search?p="+encodeURIComponent(document.getElementById("searchbar").value)+"&s="+start[index]+"&f="+filter)
+            .then(response => response.json()).then(data => {
+                if(data.results.length) {
+                    if(!document.getElementById('rescount')) {
+                        appendResultsCount(data.resultscount)
+                    }
+                    gotData[index] = true
+                    for(let i = 0; i< data.results.length;i++) {
+                        let clone = template[index].content.cloneNode(true)
+                        clone.querySelector("#anchor").innerHTML = data.results[i].name
+                        clone.querySelector("#anchor").href="/book/"+data.results[i]._id
+                        switch (filter) {
+                            case "g":
+                                clone.querySelector("#anchorgenre").href="/search?p="+data.results[i].genre+"&f=g&directSearch=true"
+                                clone.querySelector("#anchorgenre").innerHTML=data.results[i].genre
+                                break
+                            case "a":
+                                clone.querySelector("#anchorauthor").href="/search?p="+data.results[i].author+"&f=a&directSearch=true"
+                                clone.querySelector("#anchorauthor").innerHTML=data.results[i].author
+                                break
+                            case "i":
+                                clone.querySelector("#anchorISBN").href="/search?p="+data.results[i].ISBN+"&f=i&directSearch=true"
+                                clone.querySelector("#anchorISBN").innerHTML=data.results[i].ISBN
+                                break
+                            case "p":
+                                clone.querySelector("#anchorpublisher").href="/search?p="+data.results[i].publisher+"&f=p&directSearch=true"
+                                clone.querySelector("#anchorpublisher").innerHTML=data.results[i].publisher
+                                break
+                            default:
+                                break
+                        }
+                        row.appendChild(clone)
+                        start[index]++
+                    }
+                    if(data.results.length < 20) {
+                        load(filter)
+                    }
+                } else if (!data.results.length) {
+                    if(!gotData[index]) {
+                        row.appendChild(noSearchResult)
+                    }
+                    start[index] = 0
+                    unobserve()
+                }
+        }).catch(err => console.error(err))
+    }
+
+    function load(f) {
         switch(f) {
             case "n":
-                fetch("/search?p="+param+"&s="+startn+"&f="+f)
-                .then(response => response.json()).then(data => {
-                    if(data.length) {
-                        rowname.style = "display:block;"
-                        if(!h2name) {
-                            var h2 = document.createElement("h2")
-                            h2.id="h2name"
-                            h2.innerHTML = 'Name: "'+param+'"';
-                            rowname.appendChild(h2);
-                            h2name = true;
-                        }
-                        for(let i = 0; i< data.length;i++) {
-                            let clone = templatename.content.cloneNode(true);
-                            clone.querySelector("#anchor").innerHTML = data[i].name;
-                            clone.querySelector("#anchor").href="/book/"+data[i]._id;
-                            rowname.appendChild(clone)
-                            startn++
-                        }
-                        if(intersectionEntries[0].isIntersecting) {
-                            load()
-                        }
-                        if(data.length < 20) {
-                            filter++
-                            load()
-                        }
-                    } else if (!data.length){
-                        filter++
-                        load()
-                    }
-                }).catch(err => 
-                    console.error(err)
-                )
-                break;
+                filter = "n"
+                observe()
+                fetchData(filter)
+                break
             case "g":
-                fetch("/search?p="+param+"&s="+startg+"&f="+f)
-                .then(response => response.json()).then(data => {
-                    if(data.length) {
-                        rowgenre.style = "display:block;"
-                        if(!h2genre) {
-                            var h2 = document.createElement("h2")
-                            h2.id="h2genre"
-                            h2.innerHTML = "Genre: "+param;
-                            rowgenre.appendChild(h2)
-                            h2genre = true
-                        }
-                        for(let i = 0; i< data.length;i++) {
-                            let clone = templategenre.content.cloneNode(true);
-                            clone.querySelector("#anchor").innerHTML = data[i].name;
-                            clone.querySelector("#anchor").href="/book/"+data[i]._id;
-                            clone.querySelector("#anchorgenre").href="/search?p="+data[i].genre;
-                            clone.querySelector("#anchorgenre").innerHTML=data[i].genre;
-                            rowgenre.appendChild(clone)
-                            startg++
-                        }
-                        if(intersectionEntries[0].isIntersecting) {
-                            load()
-                        }
-                        if(data.length < 20) {
-                            filter++
-                            load()
-                        }
-                    } else if (!data.length){
-                        filter++
-                        load()
-                    }
-                }).catch(err => 
-                    console.error(err)
-                )
-                break;
+                filter = "g"
+                observe()
+                fetchData(filter)
+                break
             case "a":
-                fetch("/search?p="+param+"&s="+starta+"&f="+f)
-                .then(response => response.json()).then(data => {
-                    if(data.length) {
-                        rowauthor.style = "display:block;"
-                        if(!h2author) {
-                            var h2 = document.createElement("h2")
-                            h2.id="h2author"
-                            h2.innerHTML = "Autor: "+param;
-                            rowauthor.appendChild(h2)
-                            h2author = true
-                        }
-                        for(let i = 0; i< data.length;i++) {
-                            let clone = templateauthor.content.cloneNode(true);
-                            clone.querySelector("#anchor").innerHTML = data[i].name;
-                            clone.querySelector("#anchor").href="/book/"+data[i]._id;
-                            clone.querySelector("#anchorauthor").href="/search?p="+data[i].author;
-                            clone.querySelector("#anchorauthor").innerHTML=data[i].author;
-                            rowauthor.appendChild(clone)
-                            starta++
-                        }
-                        if(intersectionEntries[0].isIntersecting) {
-                            load()
-                        }
-                        if(data.length < 20) {
-                            filter++
-                            load()
-                        }
-                    } else if (!data.length){
-                        filter++
-                        load()
-                    }
-                }).catch(err => 
-                    console.error(err)
-                )
-                break;
+                filter = "a"
+                observe()
+                fetchData(filter)
+                break
             case "i":
-                fetch("/search?p="+param+"&s="+starti+"&f="+f)
-                .then(response => response.json()).then(data => {
-                    if(data.length) {
-                        rowISBN.style = "display:block;"
-                        if(!h2ISBN) {
-                            var h2 = document.createElement("h2")
-                            h2.id="h2ISBN"
-                            h2.innerHTML = "ISBN: "+param;
-                            rowISBN.appendChild(h2)
-                            h2ISBN = true
-                        }
-                        for(let i = 0; i< data.length;i++) {
-                            let clone = templateISBN.content.cloneNode(true);
-                            clone.querySelector("#anchor").innerHTML = data[i].name;
-                            clone.querySelector("#anchor").href="/book/"+data[i]._id;
-                            clone.querySelector("#anchorISBN").href="/search?p="+data[i].ISBN;
-                            clone.querySelector("#anchorISBN").innerHTML=data[i].ISBN;
-                            rowISBN.appendChild(clone)
-                            starti++
-                        }
-                        if(intersectionEntries[0].isIntersecting) {
-                            load()
-                        }
-                        if(data.length < 20) {
-                            filter++
-                            load()
-                        }
-                    } else if (!data.length){
-                        filter++
-                        load()
-                    }
-                }).catch(err => 
-                    console.error(err)
-                )
-                break;
+                filter = "i"
+                observe()
+                fetchData(filter)
+                break
             case "p":
-                fetch("/search?p="+param+"&s="+startp+"&f="+f)
-                .then(response => response.json()).then(data => {
-                    if(data.length) {
-                        rowpublisher.style = "display:block;"
-                        if(!h2publisher) {
-                            var h2 = document.createElement("h2")
-                            h2.id="h2publisher"
-                            h2.innerHTML = "Verlag: "+param;
-                            rowpublisher.appendChild(h2)
-                            h2publisher = true
-                        }
-                        for(let i = 0; i< data.length;i++) {
-                            let clone = templatepublisher.content.cloneNode(true);
-                            clone.querySelector("#anchor").innerHTML = data[i].name;
-                            clone.querySelector("#anchor").href="/book/"+data[i]._id;
-                            clone.querySelector("#anchorpublisher").href="/search?p="+data[i].publisher;
-                            clone.querySelector("#anchorpublisher").innerHTML=data[i].publisher;
-                            rowpublisher.appendChild(clone)
-                            startp++
-                        }
-                        if(intersectionEntries[0].isIntersecting) {
-                            load()
-                        }
-                        if(data.length < 20) {
-                            filter++
-                            load()
-                        }
-                    } else if (!data.length){
-                        filter++
-                        load()
-                    }
-                }).catch(err => 
-                    console.error(err)
-                )
-                break;
+                filter = "p"
+                observe()
+                fetchData(filter)
+                break
             case "x":
                 return
         }
     }
+
+    buttons.forEach(button => button.addEventListener('click', handleClick))
+    window.onload = handlePageLoad(), handledirectSearch(), setTimeout(addTransition,100), window.onresize = handleWindowResize
 </script>

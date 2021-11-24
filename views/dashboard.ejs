@@ -2,14 +2,14 @@
 <%- include("./partials/header.ejs") %>
 <%- include("./partials/sidebar.ejs") %>
 
-<div class="container-fluid" id="container" onclick="document.getElementById('body').classList.remove('body-lock');document.getElementById('sidebar').classList.remove('slide');document.getElementById('nav-icon').classList.remove('open');this.classList.remove('container-blur')" onclick="document.getElementById('body').classList.remove('body-lock');document.getElementById('sidebar').classList.remove('slide');document.getElementById('nav-icon').classList.remove('open');this.classList.remove('container-blur')">
+<div class="standardcontainer containernomargintop" id="container" style="margin-top: 0;" onclick="document.getElementById('body').classList.remove('body-lock');document.getElementById('sidebar').classList.remove('slide');document.getElementById('nav-icon').classList.remove('open');this.classList.remove('container-blur')" onclick="document.getElementById('body').classList.remove('body-lock');document.getElementById('sidebar').classList.remove('slide');document.getElementById('nav-icon').classList.remove('open');this.classList.remove('container-blur')">
   <div class="row">
     <div class="col-lg-6 subcol align-middle">
       <div class="exprd justify-content-center">
         <h1>Ausgelaufen</h1>
         <ul id="listexprd">
         </ul>
-        <button class="disabled" >Erinnerung schicken</button>
+        <button style="display: none;" class="disabled" >Erinnerung schicken</button> <!-- disabled until it has a function -->
       </div>
     </div>
     <div class="col-lg-6 subcol align-middle">
@@ -23,21 +23,19 @@
   <div class="row" style="margin-top: 30px;">
     <div class="col-lg-12 align-middle">
       <div class="box-quickinput">
-        <form action="/searchv2" method="GET" id="searchform">
+        <form action="/search" method="GET" id="searchform">
           <div class="input-group">
+            <div class="quickinput-button">
+              <svg width="35" height="35" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8 16C9.846 16 11.543 15.365 12.897 14.312L17.586 19.001C17.9765 19.3915 18.6095 19.3915 19 19.001V19.001C19.3905 18.6105 19.3905 17.9775 19 17.587L14.311 12.898C15.365 11.543 16 9.846 16 8C16 3.589 12.411 0 8 0C3.589 0 0 3.589 0 8C0 12.411 3.589 16 8 16ZM8 2C11.309 2 14 4.691 14 8C14 11.309 11.309 14 8 14C4.691 14 2 11.309 2 8C2 4.691 4.691 2 8 2Z" fill="white"/>
+              </svg>
+            </div>
             <input
               type="search"
               class="form-control quickinput"
               name="p"
               autocomplete="off"
             />
-            <span class="input-group-btn">
-              <div class="quickinput-button">
-                <svg width="35" height="35" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M8 16C9.846 16 11.543 15.365 12.897 14.312L17.586 19.001C17.9765 19.3915 18.6095 19.3915 19 19.001V19.001C19.3905 18.6105 19.3905 17.9775 19 17.587L14.311 12.898C15.365 11.543 16 9.846 16 8C16 3.589 12.411 0 8 0C3.589 0 0 3.589 0 8C0 12.411 3.589 16 8 16ZM8 2C11.309 2 14 4.691 14 8C14 11.309 11.309 14 8 14C4.691 14 2 11.309 2 8C2 4.691 4.691 2 8 2Z" fill="white"/>
-                </svg>
-              </div>
-            </span>
           </div>
         </form>
       </div>
@@ -54,7 +52,7 @@
             <th class="width-header-author">Autor</td>
           </tr>
           <% try { %>
-          <% for(let i=0; i < 12;i++){ %>
+          <% for(let i=0; i < 12;i++) { %>
             <% r = Math.floor(Math.random() * books.length) %>
             <tr class="table-content">
               <td class="table-font width-status">
@@ -64,12 +62,15 @@
                 
               </td>
               <td style="vertical-align: middle;" class="table-font width-name"><a class="booklink" href="/book/<%= books[r].id %>"><%= books[r].name %></a></td>
-              <td style="vertical-align: middle;" class="table-font width-genre"><a class="booklink" href="/search?p=<%= books[r].genre %>"><%= books[r].genre %></a></td>
-              <td style="vertical-align: middle;" class="table-font width-author"><a class="booklink" href="/search?p=<%= books[r].author %>"><%= books[r].author %></a></td>
+              <td style="vertical-align: middle;" class="table-font width-genre"><a class="booklink" href="/search?p=<%= books[r].genre %>&f=g&directSearch=true"><%= books[r].genre %></a></td>
+              <td style="vertical-align: middle;" class="table-font width-author"><a class="booklink" href="/search?p=<%= books[r].author %>&f=a&directSearch=true"><%= books[r].author %></a></td>
             </tr>
-            <% }; %>
+            <% } %>
             <% } catch(err) {console.log("Ein Fehler ist aufgetreten.")} %>
         </table>
+      </div>
+      <div style="display: grid; place-content: center;">
+        <a href="/book" class="confirmbutton" style="text-decoration:none">Alle Bücher</a>
       </div>
     </div>
   </div>
@@ -80,58 +81,56 @@
 </template>
 
 <script>
-  var template = document.querySelector("#template");
-  var listxprd = document.querySelector("#listexprd");
-  var expsoon = document.querySelector("#listexpsoon");
-  function loadexp() {
+  var template = document.querySelector("#template")
+  var listxprd = document.querySelector("#listexprd")
+  var expsoon = document.querySelector("#listexpsoon")
+
+  function fetchData() {
     fetch('/xprd')
-    .then(response => response.json()).then(data => {
+    .then(res => res.json()).then(data => {
       if(data.length) {
         for(let i = 0; i< data.length;i++) {
-          let clone = template.content.cloneNode(true);
-          var days = Math.ceil((Date.now()-data[i].exp)/86400000)// one day in milliseconds
+          let clone = template.content.cloneNode(true)
+          var days = Math.ceil((Date.now()-data[i].exp)/86400000)// 86400000 is one day in milliseconds
           clone.querySelector("#a").innerHTML = data[i].name
-          if(days = 1) {
-            clone.querySelector("#span").innerHTML = " (seit "+days+" Tag)";
+          if(days == 1) {
+            clone.querySelector("#span").innerHTML = " (seit "+days+" Tag)"
           } else {
-            clone.querySelector("#span").innerHTML = " (seit "+days+" Tagen)";
+            clone.querySelector("#span").innerHTML = " (seit "+days+" Tagen)"
           }
-          clone.querySelector("#a").href = "/book/"+data[i].id;
+          clone.querySelector("#a").href = "/book/"+data[i].id
           listxprd.appendChild(clone)
         }
       } else {
-        var li = document.createElement("li");
-        li.innerHTML="Keine ausgelaufenen Ausleihen.";
-        listxprd.appendChild(li);
+        var li = document.createElement("li")
+        li.innerHTML="Keine ausgelaufenen Ausleihen."
+        listxprd.appendChild(li)
       }
-    })
-  }
-  function loadexpsoon() {
+    }).then(
     fetch('/expsoon')
-    .then(response => response.json()).then(data => {
+    .then(res => res.json()).then(data => {
       if(data.length) {
         for(let i = 0; i< data.length;i++) {
-          let clone = template.content.cloneNode(true);
-          var days = Math.ceil((data[i].exp-Date.now())/86400000)// one day in milliseconds
+          let clone = template.content.cloneNode(true)
+          var days = Math.ceil((data[i].exp - Date.now())/86400000)// 86400000 is one day in milliseconds
           clone.querySelector("#a").innerHTML = data[i].name
-          if(days = 1) {
-            clone.querySelector("#span").innerHTML = " (in "+days+" Tag)";
+          if(days == 1) {
+            clone.querySelector("#span").innerHTML = " (in "+days+" Tag)"
           } else {
-            clone.querySelector("#span").innerHTML = " (in "+days+" Tagen)";
+            clone.querySelector("#span").innerHTML = " (in "+days+" Tagen)"
           }
-          clone.querySelector("#a").href = "/book/"+data[i].id;
+          clone.querySelector("#a").href = "/book/"+data[i].id
           expsoon.appendChild(clone)
         }
       } else {
-        var li = document.createElement("li");
-        li.innerHTML="Keine bald auslaufenden Ausleihen.";
-        listexpsoon.appendChild(li);
+        var li = document.createElement("li")
+        li.innerHTML="Keine bald auslaufenden Ausleihen."
+        listexpsoon.appendChild(li)
       }
     })
+    )
   }
-  $(document).ready(
-    loadexp(),
-    loadexpsoon()
-  );
+  
+  $(document).ready(fetchData())
 </script>
 <script src="/js/main.js"></script>

@@ -98,18 +98,26 @@
   border-radius: 100px;
 }
 
-.loading *{
-  -webkit-transition: none !important;
-  -moz-transition: none !important;
-  -ms-transition: none !important;
-  -o-transition: none !important;
-  transition: none !important;
-}
-
 body {
   background-color: #202225 !important;
   margin: 0 !important;
-  padding: 0 !important;
+  padding: 47px 0 0 0 !important;
+}
+
+a:visited {
+  color: #fff;
+}
+
+.loading *{
+  transition: none !important;
+}
+
+nav {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  z-index: 9999;
 }
 
 #navimg {

@@ -2,7 +2,7 @@
 <%- include("./partials/header.ejs") %>
 <%- include("./partials/sidebar.ejs") %>
 
-
+<!-- edit book modal -->
 <div class="modal fade" id="editbookmodal">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content" style="background-color: #4d4d4d; border-radius: 10px;">
@@ -51,29 +51,57 @@
     </div>
   </div>
 </div>
+<!-- end edit book modal -->
+
+<!-- delete book modal -->
+<div class="modal fade" id="deletebookmodal">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="background-color: #4d4d4d; border-radius: 10px;">
+      <div class="modal-header" style="border-bottom: none; background: #212529; border-top-left-radius: 10px; border-top-right-radius: 10px;">
+        <h5 class="modal-title" style="font-family: manropesemibold;">Möchtest Du dieses Buch wirklich löschen ?</h5>
+      </div>
+
+      <form action="/deletebook" method="post">
+        <input class="bookidinvis" name="bookid" type="text" value="<%= book.id %>">
+        <div class="modal-footer" style="border-top: none;">
+          <button type="button" class="confirmbutton-changepw" data-bs-dismiss="modal" style="font-family: manropelight;">Abbrechen</button>
+          <button type="submit" class="deletebutton" id="savebtn">Löschen</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
+<!-- end delete book modal -->
 
 <div class="container shadow-dreamy standardcontainer" id="container" onclick="document.getElementById('body').classList.remove('body-lock');document.getElementById('sidebar').classList.remove('slide');document.getElementById('nav-icon').classList.remove('open');this.classList.remove('container-blur')" onclick="document.getElementById('body').classList.remove('body-lock');document.getElementById('sidebar').classList.remove('slide');document.getElementById('nav-icon').classList.remove('open');this.classList.remove('container-blur')">
   <div class="row bookstuff" style="margin-left: 0; width: 100%;">
     <div class="col-xl-5" style="padding-right: 0; padding-left: 0;">
-      <div class="cover">
-          <% if(book.available == book.count && book.available > 0) { %>
-          <img class="coverimg" src="/resources/bookimg/<%= book.cover %>.png" alt="book cover">
-          <% } else { %>
+      <div class="cover" id="cover">
+          <% if(book.available == 0) { %>
           <img class="coverimg unavailable" src="/resources/bookimg/<%= book.cover %>.png" alt="book cover">
+          <% } else if(book.available > 0 && book.available != book.count) { %>
+            <img class="coverimg available-orange" src="/resources/bookimg/<%= book.cover %>.png" alt="book cover">
+          <% } else { %>
+          <img class="coverimg" src="/resources/bookimg/<%= book.cover %>.png" alt="book cover">
           <% } %>
       </div>
     </div>
     <div class="col-sm-7" style="padding-right: 0; padding-left: 0;">
-      <div class="details">
-        <div class="editavatar">
+      <div class="details" id="details">
+        <div class="editbook">
           <input type="button" id="editbtn" name="changeusrimg" style="display: none;" data-bs-toggle="modal" data-bs-target="#editbookmodal">
           <label for="editbtn"><div><svg style="width:100%;padding:4px;" fill="none" stroke="black" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg></div></label>
+        </div>
+        <div class="deletebook">
+          <input type="button" id="deletebtn" name="deletebook" style="display: none;" data-bs-toggle="modal" data-bs-target="#deletebookmodal">
+          <label for="deletebtn"><div><svg style="width: 100%;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M5 20a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8h2V6h-4V4a2 2 0 0 0-2-2H9a2 2 0 0 0-2 2v2H3v2h2zM9 4h6v2H9zM8 8h9v12H7V8z"></path><path d="M9 10h2v8H9zm4 0h2v8h-2z"></path></svg></div></label>
         </div>
         <h1 class="bookdetailsheader"><%= book.name %></h1>
         <% if(success) { %>
           <div style="margin-bottom: 20px; text-align: center; font-family: manrope; color: #53b581;"><%= success %></div>
         <% } if(error) { %>
-          <div style="margin-bottom: 20px; text-align: center; font-family: manrope; color: red;"><%= error %></div>
+          <div style="margin-bottom: 20px; text-align: center; font-family: manrope; color: #F92C47;"><%= error %></div>
         <% } %>
           <div class="bookdisplay">
             <label for="author" class="bookname">Autor:</label>
@@ -180,15 +208,15 @@
 </div>
 
 <script>
-  var name = "<%= book.name %>";
-  var author = "<%= book.author %>";
-  var genre = "<%= book.genre %>";
-  var publisher = "<%= book.publisher %>";
-  var isbn = "<%= book.ISBN %>";
-  var count = "<%= book.count %>";
+  var bname = "<%= book.name %>"
+  var author = "<%= book.author %>"
+  var genre = "<%= book.genre %>"
+  var publisher = "<%= book.publisher %>"
+  var isbn = "<%= book.ISBN %>"
+  var count = "<%= book.count %>"
 
   function checkCount() {
-    count = document.getElementById('inpcount').value;
+    count = document.getElementById('inpcount').value
     if(count && count.match(/^[1-9]+$/) == null) { //check if entered value holds digits 0-9
       document.getElementById('usrdialogue').innerHTML = "Anzahl muss eine gültige Zahl sein."
       document.getElementById('savebtn').classList.add('disabled')
@@ -198,24 +226,38 @@
       document.getElementById('savebtn').classList.remove('disabled')
       document.getElementById('usrdialogue').innerHTML = ""
     }
-  };
+  }
 
   function check() {
-    var inpname = document.getElementById('inpname').value;
-    var inpauthor = document.getElementById('inpauthor').value;
-    var inpgenre = document.getElementById('inpgenre').value;
-    var inppublisher = document.getElementById('inppublisher').value;
-    var inpisbn = document.getElementById('inpisbn').value;
-    var inpcount = document.getElementById('inpcount').value;
-    if(inpname == name && inpauthor == author && inpgenre == genre && inppublisher == publisher && inpisbn == isbn && inpcount == count || !inpname || !inpauthor || !inpgenre || !inppublisher || !inpisbn) {
-      document.getElementById('savebtn').classList.add('disabled');
+    var inpname = document.getElementById('inpname').value
+    var inpauthor = document.getElementById('inpauthor').value
+    var inpgenre = document.getElementById('inpgenre').value
+    var inppublisher = document.getElementById('inppublisher').value
+    var inpisbn = document.getElementById('inpisbn').value
+    var inpcount = document.getElementById('inpcount').value
+    if((inpname != bname && inpauthor != author && inpgenre != genre && inppublisher != publisher && inpcount != count) || inpname || inpauthor || inpgenre || inppublisher) {
+      document.getElementById('savebtn').classList.remove('disabled')
+      console.log("yes")
     } else {
-      document.getElementById('savebtn').classList.remove('disabled');
+      document.getElementById('savebtn').classList.add('disabled')
+      console.log("no")
     }
   }
 
 </script>
 <script src="/socket.io/socket.io.js"></script>
 <script src="/js/main.js"></script> //required for socketio connection
+<script>
+  socket.on('connect', () => {
+    socket.emit("join", "<%= book.id %>")
+    console.log('Joined room: "<%= book.id %>" (Client)')
+    socket.on('bookupdate', function () {
+      $('#bookstufftable').load('/getbdatahistory/id=<%= book.id %>')
+      $('#cover').load('/getbdata/id=<%= book.id %>')
+      $('#details').load('/getbdetails/id=<%= book.id %>')
+      $('#bookform').load('/getbdataform/id=<%= book.id %>')
+    })
+  })
+</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>

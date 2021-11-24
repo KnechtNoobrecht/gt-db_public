@@ -47,6 +47,7 @@ node_modules/
 jspm_packages/
 static/data/db/*
 static/.DS_Store
+.DS_Store
 
 #files/directories that dont belong in this branch
 .vscode/

@@ -84,6 +84,12 @@
   position: relative;
 }
 
+.form-section > input {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+}
+
 .form-label {
   position: absolute;
   top: 15px;
@@ -94,6 +100,10 @@
   -webkit-transition: 0.2s;
   transition: 0.2s;
   cursor: text;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
 .form-section input:focus + .form-label, .form-section input:valid + .form-label {
@@ -358,6 +368,16 @@
 .shadow-dreamy {
   -webkit-box-shadow: 0 2px 16px 0 rgba(0, 0, 0, 0.25), 0 3px 15px 8px rgba(0, 0, 0, 0.08);
           box-shadow: 0 2px 16px 0 rgba(0, 0, 0, 0.25), 0 3px 15px 8px rgba(0, 0, 0, 0.08);
+}
+
+@media screen and (max-width: 400px) {
+  .forgotpw, .rect, .rect-signup, .accexisting {
+    width: 98%;
+    left: 1%;
+  }
+  .forgotpwdivider {
+    display: none;
+  }
 }
 
 @-webkit-keyframes rotation {

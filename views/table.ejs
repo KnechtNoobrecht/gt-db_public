@@ -2,30 +2,26 @@
 <%- include("./partials/header.ejs") %>
 <%- include("./partials/sidebar.ejs") %>
 
-<div class="container-fluid standardcontainer" style="margin-top: 0;" id="container" onclick="document.getElementById('body').classList.remove('body-lock');document.getElementById('sidebar').classList.remove('slide');document.getElementById('nav-icon').classList.remove('open');this.classList.remove('container-blur')" onclick="document.getElementById('body').classList.remove('body-lock');document.getElementById('sidebar').classList.remove('slide');document.getElementById('nav-icon').classList.remove('open');this.classList.remove('container-blur')">
+<div class="standardcontainer" style="margin-top: 0;" id="container" onclick="document.getElementById('body').classList.remove('body-lock');document.getElementById('sidebar').classList.remove('slide');document.getElementById('nav-icon').classList.remove('open');this.classList.remove('container-blur')" onclick="document.getElementById('body').classList.remove('body-lock');document.getElementById('sidebar').classList.remove('slide');document.getElementById('nav-icon').classList.remove('open');this.classList.remove('container-blur')">
   <!--page-specific content-->
   <div class="library-table bulk">
-    <div class="mycontainer">
-      <div class="box-quickinput" style="margin-bottom: 40px;">
-            <form action="/searchv2" method="GET">
-              <div class="input-group">
-                <input
-                  type="search"
-                  id="searchbar"
-                  class="form-control quickinput"
-                  name="p"
-                  autocomplete="off"
-                />
-                <span class="input-group-btn">
-                  <div class="quickinput-button">
-                    <svg width="35" height="35" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M8 16C9.846 16 11.543 15.365 12.897 14.312L17.586 19.001C17.9765 19.3915 18.6095 19.3915 19 19.001V19.001C19.3905 18.6105 19.3905 17.9775 19 17.587L14.311 12.898C15.365 11.543 16 9.846 16 8C16 3.589 12.411 0 8 0C3.589 0 0 3.589 0 8C0 12.411 3.589 16 8 16ZM8 2C11.309 2 14 4.691 14 8C14 11.309 11.309 14 8 14C4.691 14 2 11.309 2 8C2 4.691 4.691 2 8 2Z" fill="white"/>
-                    </svg>
-                  </div>
-                </span>
-              </div>
-            </form>
-      </div>
+    <div class="box-quickinput" style="margin-bottom: 40px;">
+      <form action="/search" method="GET" id="searchform">
+        <div class="input-group">
+          <div class="quickinput-button">
+            <svg width="35" height="35" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path d="M8 16C9.846 16 11.543 15.365 12.897 14.312L17.586 19.001C17.9765 19.3915 18.6095 19.3915 19 19.001V19.001C19.3905 18.6105 19.3905 17.9775 19 17.587L14.311 12.898C15.365 11.543 16 9.846 16 8C16 3.589 12.411 0 8 0C3.589 0 0 3.589 0 8C0 12.411 3.589 16 8 16ZM8 2C11.309 2 14 4.691 14 8C14 11.309 11.309 14 8 14C4.691 14 2 11.309 2 8C2 4.691 4.691 2 8 2Z" fill="white"/>
+            </svg>
+          </div>
+          <input
+            type="search"
+            class="form-control quickinput"
+            name="p"
+            autocomplete="off"
+          />
+        </div>
+      </form>
+    </div>
       <div style="overflow-x: auto;">
         <table class="table" id="table">
           <tr class="table-top table-font-header">
@@ -49,7 +45,6 @@
             </tr>
           </template>
         </table>
-      </div>
     </div>
   </div>
   <div class="d-flex justify-content-center" id="spinner">
@@ -60,56 +55,58 @@
 </div>
 
 <script>
-  var template = document.querySelector("#template");
-  var table = document.querySelector("#table");
+  var template = document.querySelector("#template")
+  var table = document.querySelector("#table")
   start = 0
-  var intersectionEntries;
+  var intersectionEntries
   const intersectionObserver = new IntersectionObserver(entries => {
-    intersectionEntries = entries;
+    intersectionEntries = entries
         if(entries[0].intersectionRatio <= 0) {
-            return;
+            return
         }
-        load();
-    });
+        load()
+    })
     try {
-        intersectionObserver.observe(document.getElementById("spinner"));
+        intersectionObserver.observe(document.getElementById("spinner"))
     } catch (error) {
-        
+        console.log(error)
     }
   function load() {
     fetch("/book?s="+start)
       .then(response => response.json()).then(data => {
           if(data.length) {
               for(let i = 0; i< data.length;i++) {
-                  start++;
+                  start++
                   let clone = template.content.cloneNode(true);
-                  if(data[i].available != 0) {
-                    clone.querySelector("#availablestate").classList.add("bookavailable")
-                  } else {
+                  if(data[i].available == 0) {
                     clone.querySelector("#availablestate").classList.add("bookunavailable")
+                  } else if(data[i].available > 0 && data[i].available != data[i].count) {
+                    clone.querySelector("#availablestate").classList.add("bookavailable-orange") 
+                  } else {
+                    clone.querySelector("#availablestate").classList.add("bookavailable")
                   }
                   clone.querySelector("#bname").innerHTML = data[i].name
                   clone.querySelector("#bname").href = "/book/"+data[i]._id
                   clone.querySelector("#bgenre").innerHTML = data[i].genre
-                  clone.querySelector("#bgenre").href = "/search?p="+data[i].genre
+                  clone.querySelector("#bgenre").href = "/search?p="+data[i].genre+"&f=g&directSearch=true"
                   clone.querySelector("#bauthor").innerHTML = data[i].author
-                  clone.querySelector("#bauthor").href = "/search?p="+data[i].author
+                  clone.querySelector("#bauthor").href = "/search?p="+data[i].author+"&f=a&directSearch=true"
                   table.appendChild(clone)
               }
               if(intersectionEntries[0].isIntersecting) {
                 load()
               }
-              if(data.length < 20) {
-                console.log("<20")
-                load()
+              if(data.length < 25) {
+                intersectionObserver.unobserve(document.getElementById("spinner"))
+                document.getElementById("spinner").parentNode.removeChild(document.getElementById("spinner"))
               }
           } else if (!data.length){
-            console.log("!data")
-            intersectionObserver.unobserve(document.getElementById("spinner"));
-            document.getElementById("spinner").parentNode.removeChild(document.getElementById("spinner"));
+            console.log("end of results")
+            intersectionObserver.unobserve(document.getElementById("spinner"))
+            document.getElementById("spinner").parentNode.removeChild(document.getElementById("spinner"))
           }
       }).catch(err => 
           console.error(err)
-      );
+      )
   }
 </script>

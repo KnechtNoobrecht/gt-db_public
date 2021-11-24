@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 
 app.post('/az2vcfyz3vr3duwj2fdn3jbq', (req, res) => {
   try {
-    if(req.body.ref == "refs/heads/main") {
+    if(req.body.ref == "refs/heads/master") {
       const gitpull = exec('cd /home/gt-db/gt-db/ && git pull', function (err,stdout,stderr) {
         if(err) {
           console.log(err)
