@@ -251,10 +251,7 @@ Anschließend erstellen Sie vier Einträge.
    Ein Passwort, mit dem die Cookies verschlüsselt werden.
    
    Beispiel: `COOKIESECRET="5Ut18QEnbjTzv2hH"`
-7. `LASTUPDATE`</br>
-   Diese Variable wird bei jedem Update durch den Zeitpunkt des Updates ersetzt.
-   
-   Sie kann als `LASTUPDATE=""` definiert werden, ist aber zwingend erforderlich.
+
     
 ### MongoDB konfigurieren:
 In dem Installationsverzeichnis `gt-db_public` erstellen Sie den Ordner `db` (oder nennen Sie ihn wie Sie möchten) indem Sie `mkdir db` ausführen.</br>
