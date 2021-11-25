@@ -236,7 +236,7 @@ Anschließend erstellen Sie vier Einträge.
     
     Beispiel: `DBPASSWORDLOCAL="A6yzNShCTCe8mzVP"`
 2. `DBUSER`</br>
-    Dieser Eintrag muss wie folgt sein:
+    Dieser Eintrag muss zwingend wie folgt sein:
     `DBUSER="superuser"`
 3. `IPADDRESS`</br>
     Die IP-Addresse, unter der die Datenbank läuft, zu der sich die Webapp verbindet
@@ -250,11 +250,11 @@ Anschließend erstellen Sie vier Einträge.
 6. `COOKIESECRET`</br>
    Ein Passwort, mit dem die Cookies verschlüsselt werden.
    
-7. `LASTUPDATE`</br>
-   Diese Variable wird bei jedem Update durch den Zeitpunkt des Updates ersetzt.</br>
-   Sie kann als `LASTUPDATE=""` definiert werden.
-   
    Beispiel: `COOKIESECRET="5Ut18QEnbjTzv2hH"`
+7. `LASTUPDATE`</br>
+   Diese Variable wird bei jedem Update durch den Zeitpunkt des Updates ersetzt.
+   
+   Sie kann als `LASTUPDATE=""` definiert werden, ist aber zwingend erforderlich.
     
 ### MongoDB konfigurieren:
 In dem Installationsverzeichnis `gt-db_public` erstellen Sie den Ordner `db` (oder nennen Sie ihn wie Sie möchten) indem Sie `mkdir db` ausführen.</br>
