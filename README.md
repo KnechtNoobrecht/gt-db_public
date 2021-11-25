@@ -250,6 +250,10 @@ Anschließend erstellen Sie vier Einträge.
 6. `COOKIESECRET`</br>
    Ein Passwort, mit dem die Cookies verschlüsselt werden.
    
+7. `LASTUPDATE`</br>
+   Diese Variable wird bei jedem Update durch den Zeitpunkt des Updates ersetzt.</br>
+   Sie kann als `LASTUPDATE=""` definiert werden.
+   
    Beispiel: `COOKIESECRET="5Ut18QEnbjTzv2hH"`
     
 ### MongoDB konfigurieren:
