@@ -20,6 +20,8 @@
                         name="p"
                         autocomplete="off"
                         value="<%= param %>"/>
+                        <input type="text" name="f" id="filter" class="hidden" value="n">
+                        <input type="text" name="directSearch" class="hidden" value="true">
                     </div>
                   </form>
                 <div class="bgdiv" id="bgdiv">
@@ -119,29 +121,21 @@
 </div>
 
 <script>
-    var directSearch = "<%=directSearch%>"
-    var passedFilter = "<%=passedFilter%>"
-    var resultscount = Number
-    var filter = "n"
-    var intersectionEntries
-    var currentSelectedButton = String
-    var isCleared = false
-    var start = [0,0,0,0,0]
-    var gotData = [false,false,false,false,false]
-    const spinner = document.getElementById("spinner")
-    var param = document.getElementById("searchbar").value
+    const searchBar = document.getElementById("searchbar")
     const container = document.querySelector('#container')
     const row = document.getElementById('row')
     const bgdiv = document.getElementById("bgdiv")
+    const spinner = document.getElementById("spinner")
+    const searchForm = document.getElementById("searchform")
+    const filterInput = document.getElementById("filter")
+    const noSearchResult = document.createElement('h2')
+    const buttons = document.querySelectorAll('.searchbar > div > h5')
     const template = [
         document.querySelector("#templatename"),
         document.querySelector("#templategenre"),
         document.querySelector("#templateauthor"),
         document.querySelector("#templateISBN"),
         document.querySelector("#templatepublisher")]
-    const noSearchResult = document.createElement('h2');
-    noSearchResult.innerHTML = `Keine Suchergebnisse in dieser Kategorie für "${param}"`
-    const buttons = document.querySelectorAll('.searchbar > div > h5')
     const intersectionObserver = new IntersectionObserver(entries => {
         intersectionEntries = entries
         if(entries[0].intersectionRatio <= 0) {
@@ -166,6 +160,20 @@
             document.getElementById('categorybuttonpublisher').click()
         }
     }
+
+    var directSearch = "<%=directSearch%>"
+    var passedFilter = "<%=passedFilter%>"
+    var resultscount = Number
+    var filter = "n"
+    var intersectionEntries
+    var currentSelectedButton = String
+    var isCleared = false
+    var start = [0,0,0,0,0]
+    var gotData = [false,false,false,false,false]
+    var param = searchBar.value
+
+    noSearchResult.innerHTML = `Keine Suchergebnisse in dieser Kategorie für "${param}"`
+    
 
     function appendResultsCount(results) {
         var text = document.createElement('h5')
@@ -194,6 +202,7 @@
     function handleClick() {
         var btncoords = this.getBoundingClientRect()
         currentSelectedButton = this.id
+        filterInput.value = this.title
         bgdiv.style.width = btncoords.width+25+"px"
         bgdiv.style.left = btncoords.left-12.5+"px"
         filter = this.title
@@ -270,7 +279,7 @@
                 break
         }
 
-        fetch("/search?p="+encodeURIComponent(document.getElementById("searchbar").value)+"&s="+start[index]+"&f="+filter)
+        fetch("/search?p="+encodeURIComponent(searchBar.value)+"&s="+start[index]+"&f="+filter)
             .then(response => response.json()).then(data => {
                 if(data.results.length) {
                     if(!document.getElementById('rescount')) {
@@ -348,7 +357,12 @@
                 return
         }
     }
-
+    
+    searchBar.addEventListener("keyup", function(event) {
+        if (event.keyCode === 13) {
+            searchForm.submit()
+        }
+    })
     buttons.forEach(button => button.addEventListener('click', handleClick))
     window.onload = handlePageLoad(), handledirectSearch(), setTimeout(addTransition,100), window.onresize = handleWindowResize
 </script>

@@ -48,6 +48,7 @@ const options = {
 const server = https.createServer(options, app)
 io.attach(server)
 const upload = require("express-fileupload")
+const lastupdate = process.env.LASTUPDATE || "nie"
 const port = process.env.SRVPORT
 
 var expired
@@ -139,7 +140,7 @@ app.use(function (req, res, next) {
 })
 
 //login page
-app.get('/', function (req, res) {
+app.get("/", function (req, res) {
   if (req.isAuthenticated()) {
     res.redirect('/dashboard')
   } else if(!req.isAuthenticated()) {
@@ -149,13 +150,14 @@ app.get('/', function (req, res) {
       layout: './layouts/layout_index.ejs',
       title: "Login - GT-DB",
       errors,
-      username
+      username,
+      lastupdate
     })
   }
 })
 
 //register page
-app.get('/register', function (req, res) {
+app.get("/register", function (req, res) {
     const errors = req.flash('error')
     res.render('register',{
       layout: './layouts/layout_index.ejs',
@@ -247,7 +249,7 @@ app.post("/auth/signup", async function (req, res) {
   }
 })
 
-app.get('/book/:bookid', ensureAuthenticated, ensureManager, async function(req,res) {
+app.get("/book/:bookid", ensureAuthenticated, ensureManager, async function(req,res) {
   async function searchbookbyid(params) {
     var book = await Book.findById(params).catch(err => {console.log(err)})
     return book
@@ -284,7 +286,7 @@ app.get('/book/:bookid', ensureAuthenticated, ensureManager, async function(req,
   }
 })
 
-app.post('/book/submit', ensureAuthenticated, ensureManager, async function(req,res) {
+app.post("/book/submit", ensureAuthenticated, ensureManager, async function(req,res) {
   var bid = req.body.bookid
   var thirtydays = 1000*60*60*24*30
   var date = req.body.date
@@ -323,7 +325,7 @@ app.post('/book/submit', ensureAuthenticated, ensureManager, async function(req,
   expired = await getexprd()
 })
 
-app.get('/book/drop/id=:id&bid=:bookid', ensureAuthenticated, ensureManager, async function(req,res) {
+app.get("/book/drop/id=:id&bid=:bookid", ensureAuthenticated, ensureManager, async function(req,res) {
   var date = Date.now()
   var date = new Date(date)
   var date = formatDate(date)
@@ -353,7 +355,7 @@ app.get('/book/drop/id=:id&bid=:bookid', ensureAuthenticated, ensureManager, asy
   expired = await getexprd()
 })
 
-app.get('/addbook', ensureAuthenticated, ensureManager, function(req,res) {
+app.get("/addbook", ensureAuthenticated, ensureManager, function(req,res) {
   res.render("addbook", {
     user: req.user,
     layout: './layouts/layout_dashboard.ejs',
@@ -388,7 +390,7 @@ app.post("/addbook", ensureAuthenticated, ensureManager, function(req,res) {
   }
 })
 
-app.get('/administration', ensureAuthenticated, ensureManager, function (req, res) {
+app.get("/administration", ensureAuthenticated, ensureManager, function (req, res) {
   getAllUsers().then((users) => {
     users.sort((a, b) => {
       let xa = a.lastname.toLowerCase()
@@ -820,7 +822,7 @@ app.post("/upload", ensureAuthenticated, ensureManager, async function (req, res
   }
 })
 ////
-app.get('/success', function (req, res) {
+app.get("/success", function (req, res) {
   res.render('success', {
     title:"Erfolgreich registriert - GT-DB",
     layout: false,

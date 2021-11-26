@@ -10,7 +10,6 @@ function sleep(ms) {
 }
 
 var url = 'mongodb://'+process.env.DBUSER+':'+process.env.DBPASSWORDLOCAL+'@'+process.env.IPADDRESS+':27017/gt-db?authSource=admin'
-//var url = 'mongodb://100.10.1.1:27017/'
 async function connectdb(callback) {
     console.log('Connecting to database...')
     try {

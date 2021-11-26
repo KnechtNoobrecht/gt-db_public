@@ -18,7 +18,7 @@
 }
 
 .rectapw {
-  height: calc(100vh - 45px);
+  height: calc(100vh - 123.5px);
   display: grid;
   place-items: center;
 }
@@ -311,6 +311,37 @@
 
 .shadow-dreamy{
   box-shadow: 0 2px 16px 0 rgba(0, 0, 0, .25), 0 3px 15px 8px rgba(0, 0, 0, 0.08);
+}
+
+.footer {
+  display: grid;
+  place-content: center;
+}
+
+.footer-link svg {
+  fill: rgba(255, 255, 255, 0.75);
+  transition: 0.2s;
+  &:hover{
+    fill: #fff;
+    transition: 0.2s;
+  }
+}
+
+.footer:last-child {
+  margin-bottom: 25px;
+  margin-top: 5px;
+}
+
+.lastupdatenote {
+  color: rgba(255, 255, 255, 0.30);
+  font-family: manropelight;
+  font-size: 10pt;
+  text-decoration: none;
+  cursor: default;
+  user-select: none;
+  &:hover {
+    @extend .lastupdatenote;
+  }
 }
 
 @media screen and (max-width: 400px) {

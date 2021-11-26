@@ -31,7 +31,7 @@
 }
 
 .rectapw {
-  height: calc(100vh - 45px);
+  height: calc(100vh - 123.5px);
   display: -ms-grid;
   display: grid;
   place-items: center;
@@ -368,6 +368,41 @@
 .shadow-dreamy {
   -webkit-box-shadow: 0 2px 16px 0 rgba(0, 0, 0, 0.25), 0 3px 15px 8px rgba(0, 0, 0, 0.08);
           box-shadow: 0 2px 16px 0 rgba(0, 0, 0, 0.25), 0 3px 15px 8px rgba(0, 0, 0, 0.08);
+}
+
+.footer {
+  display: -ms-grid;
+  display: grid;
+  place-content: center;
+}
+
+.footer-link svg {
+  fill: rgba(255, 255, 255, 0.75);
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+
+.footer-link svg:hover {
+  fill: #fff;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+
+.footer:last-child {
+  margin-bottom: 25px;
+  margin-top: 5px;
+}
+
+.lastupdatenote, .lastupdatenote:hover {
+  color: rgba(255, 255, 255, 0.3);
+  font-family: manropelight;
+  font-size: 10pt;
+  text-decoration: none;
+  cursor: default;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
 @media screen and (max-width: 400px) {
