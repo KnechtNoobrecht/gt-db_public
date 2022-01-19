@@ -24,8 +24,8 @@
 Module aktualisiert, um Sicherheitslücken zu schließen.
 
 #### 25.11.2021
-
 Die Startseite enthält nun einen Link zum GitHub-Repository und ein Datum der letzten Aktualisierung.
+
 #### 23.11.2021
 <b>Neues Feature:</b> Die Suchfunktion unterstützt nun die direkte Suche eines Begriffs in einer bestimmten Kategorie. Beispielsweise per Link.
 
