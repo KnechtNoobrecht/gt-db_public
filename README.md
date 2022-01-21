@@ -20,7 +20,7 @@
 [Installation](#installation)
 
 # <a name="changelog"></a> Changelog
-#### 19.01.2022
+#### 21.01.2022
 Module aktualisiert, um Sicherheitslücken zu schließen.
 
 #### 25.11.2021
