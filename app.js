@@ -24,6 +24,9 @@ const { searchbookbyid } = require("./app_extension")
 const { create } = require("./models/user")
 const { domainToASCII } = require("url")
 const { log } = require("console")
+const User = require("./models/user")
+const Book = require("./models/book")
+const BookHistory = require('./models/bookhistory')
 const mongoose = require("mongoose")
 const express = require("express")
 const app = express()
@@ -32,9 +35,6 @@ const session = require("express-session")
 const flash = require("connect-flash")
 const passport = require("passport")
 const io = (app.io = require("socket.io")())
-const User = require("./models/user")
-const Book = require("./models/book")
-const BookHistory = require('./models/bookhistory')
 const CryptoJS = require("crypto-js")
 const bodyParser = require("body-parser")
 const urlencodedParser = bodyParser.urlencoded({ extended: false })
@@ -70,7 +70,7 @@ const transporter = nodemailer.createTransport({
 //Config
 require("./config/passport")(passport)
 
-//check for expired/expiring soon books every day at 5am
+//check every day at 5am
 cron.schedule('0 0 5 1-31 1-12 0-7', async () => {
   expired = await getexprd()
   expiringsoon = await getexpsoon()
@@ -86,7 +86,6 @@ app.use(express.urlencoded({ extended: true }))
 
 //Import resources
 app.use(express.static(__dirname + "/public/"))
-app.use(express.urlencoded({ extended: true }))
 
 //Express session
 app.use(
@@ -115,7 +114,7 @@ app.use(function (req, res, next) {
 
 //log route to console
 app.use(function (req, res, next) {
-  console.log("\x1b[32m [app] GET: "+req.url+"\x1b[0m")
+  console.log(`\x1b[32m [app] ${req.method}: ${req.url}\x1b[0m`)
   next()
 })
 
@@ -203,7 +202,6 @@ app.get("/deleteUserByID/:userID", ensureAuthenticated, async function(req,res) 
 
 app.get("/toggleAdmin/:userID", ensureAuthenticated, ensureManager, ensureAdmin, async function(req,res) {
   var user = await User.findOne({_id: req.params.userID})
-
   await User.updateOne({_id: req.params.userID},{admin: !user.admin})
   res.redirect('/')
 })
@@ -320,7 +318,7 @@ app.post("/book/submit", ensureAuthenticated, ensureManager, async function(req,
     })
   }
 
-  // update expired books list
+  // update expired and expiring soon books list
   expiringsoon = await getexpsoon()
   expired = await getexprd()
 })
