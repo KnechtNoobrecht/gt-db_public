@@ -16,10 +16,13 @@
 
 # Gliederung
 [Changelog](#changelog)</br>
-[Anleitung](#anleitung)</br>
+[Handbuch](#anleitung)</br>
 [Installation](#installation)
 
 # <a name="changelog"></a> Changelog
+#### 23.02.2022
+Kleinere Verbesserungen.
+
 #### 21.01.2022
 Module aktualisiert, um Sicherheitslücken zu schließen.
 
@@ -29,7 +32,7 @@ Die Startseite enthält nun einen Link zum GitHub-Repository und ein Datum der l
 #### 23.11.2021
 <b>Neues Feature:</b> Die Suchfunktion unterstützt nun die direkte Suche eines Begriffs in einer bestimmten Kategorie. Beispielsweise per Link.
 
-# <a name="anleitung"></a> Anleitung
+# <a name="anleitung"></a> Handbuch
 
 ### Registrieren und Anmelden
 
