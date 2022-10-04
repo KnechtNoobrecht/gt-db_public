@@ -250,7 +250,7 @@ Anschließend erstellen Sie vier Einträge.
 3. `IPADDRESS`</br>
     Die IP-Addresse, unter der die Datenbank läuft, zu der sich die Webapp verbindet
     
-    Beispiel: `IP_ADDRESS="localhost"`
+    Beispiel: `IPADDRESS="localhost"`
 5. `SRVPORT`</br>
     Der Port unter dem der Webserver läuft.
     Zu Testzwecken empfehle ich, einen Port zu wählen, der nicht `80` oder `443` ist, da Linux diese Standardmäßig blockiert, beziehungsweise Adminrechte erfordern,        was aber nicht praktikabel ist.
