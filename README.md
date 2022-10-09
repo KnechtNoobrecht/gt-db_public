@@ -259,8 +259,12 @@ Anschließend erstellen Sie vier Einträge.
 6. `COOKIESECRET`</br>
    Ein Passwort, mit dem die Cookies verschlüsselt werden.
    
-   Beispiel: `COOKIESECRET="5Ut18QEnbjTzv2hH"`
+   Beispiel: `COOKIESECRET="durchEinSicheresPasswortErsetzen"`
 
+7. `UPDATEFOLDER`</br>
+   Vollständiger Pfad zur Installation des Programms.
+   
+   Beispiel: `UPDATEFOLDER="/home/user/gt-db"`
     
 ### MongoDB konfigurieren:
 In dem Installationsverzeichnis `gt-db_public` erstellen Sie den Ordner `db` (oder nennen Sie ihn wie Sie möchten) indem Sie `mkdir db` ausführen.</br>
