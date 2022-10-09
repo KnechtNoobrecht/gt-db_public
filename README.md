@@ -264,7 +264,7 @@ Anschließend erstellen Sie vier Einträge.
 7. `UPDATEFOLDER`</br>
    Vollständiger Pfad zur Installation des Programms.
    
-   Beispiel: `UPDATEFOLDER="/home/user/gt-db"`
+   Beispiel: `UPDATEFOLDER="/home/user/gt-db_public"`
     
 ### MongoDB konfigurieren:
 In dem Installationsverzeichnis `gt-db_public` erstellen Sie den Ordner `db` (oder nennen Sie ihn wie Sie möchten) indem Sie `mkdir db` ausführen.</br>
